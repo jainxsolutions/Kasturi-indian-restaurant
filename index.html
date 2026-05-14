@@ -172,15 +172,9 @@ tailwind.config = {
     /* Hamburger toggle — comfortable tap target without visual change */
     #navToggle { padding: 8px; margin: -8px; }
 
-    /* Gallery filmstrip — auto-scrolling marquee so images move into view on mobile.
-       JS duplicates the image set; this keyframe loops the first set seamlessly. */
-    .filmstrip { overflow: hidden; }
-    .filmstrip-track { animation: filmstrip-scroll 40s linear infinite; transform: none; gap: 0.5rem; padding-left: 1.5rem; padding-right: 1.5rem; will-change: transform; }
+    /* Gallery filmstrip — slightly tighter spacing on phones; GSAP handles the scroll-pin. */
+    .filmstrip-track { gap: 0.5rem; }
     .filmstrip-track img { height: 50vh; }
-    @keyframes filmstrip-scroll {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
 
     /* Form fields — slightly taller tap zone */
     input, textarea { padding-top: 0.875rem; padding-bottom: 0.875rem; min-height: 44px; }
@@ -711,11 +705,16 @@ tailwind.config = {
           scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
         });
       });
+    }
 
+    /* Gallery filmstrip — pin the section and turn vertical scroll into
+       horizontal image cycling. Runs on both desktop and mobile so users
+       see every image as they scroll. */
+    if (!reduceMotion) {
       const strip = document.querySelector('.filmstrip-track');
       const gallery = document.querySelector('#gallery');
       if (strip && gallery) {
-        const distance = () => strip.scrollWidth / 2;
+        const distance = () => Math.max(0, strip.scrollWidth - window.innerWidth);
         gsap.to(strip, {
           x: () => -distance(),
           ease: 'none',
@@ -729,15 +728,6 @@ tailwind.config = {
             invalidateOnRefresh: true
           }
         });
-      }
-    }
-    /* On mobile the filmstrip is a pure-CSS auto-scrolling marquee.
-       Duplicate the image set so the keyframe (0 → -50%) loops seamlessly. */
-    if (isMobile) {
-      const strip = document.querySelector('.filmstrip-track');
-      if (strip && !strip.dataset.cloned) {
-        Array.from(strip.children).forEach(node => strip.appendChild(node.cloneNode(true)));
-        strip.dataset.cloned = '1';
       }
     }
   }
