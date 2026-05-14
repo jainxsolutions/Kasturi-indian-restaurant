@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kasturi Indian Restaurant — The Menu</title>
+<meta name="description" content="The complete menu at Kasturi Indian Restaurant — starters, tandoori, curries, biryani, breads, desserts and more, generously portioned and served in Ho Chi Minh City." />
+<link rel="icon" type="image/svg+xml" href="assets/logo/kasturi-logo-cutout.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ivory:    '#FDFBF7',
+        ivory2:   '#F5F0E6',
+        charcoal: '#1A1A1A',
+        charcoal2:'#2A2A2A',
+        gold:     '#D4AF37',
+        amber:    '#E0A458',
+        ash:      '#6B6B6B',
+      },
+      fontFamily: {
+        serif: ['"Cormorant Garamond"', 'serif'],
+        sans:  ['Inter', 'sans-serif'],
+      },
+    }
+  }
+}
+</script>
+<style>
+  html, body { background:#FDFBF7; color:#1A1A1A; }
+  body { font-family:'Inter', sans-serif; cursor:none; overflow-x:hidden; }
+  ::selection { background:#D4AF37; color:#FDFBF7; }
+
+  .grain::before {
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:60;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.22 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity:.35; mix-blend-mode:multiply;
+  }
+
+  .mesh {
+    background:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'><g fill='none' stroke='%23D4AF37' stroke-width='0.55' opacity='0.18'><path d='M45 0 L90 45 L45 90 L0 45 Z'/><circle cx='45' cy='45' r='1.6' fill='%23D4AF37' stroke='none' opacity='0.55'/><circle cx='0' cy='0' r='1.2' fill='%23D4AF37' stroke='none' opacity='0.45'/><circle cx='90' cy='0' r='1.2' fill='%23D4AF37' stroke='none' opacity='0.45'/><circle cx='0' cy='90' r='1.2' fill='%23D4AF37' stroke='none' opacity='0.45'/><circle cx='90' cy='90' r='1.2' fill='%23D4AF37' stroke='none' opacity='0.45'/></g></svg>"),
+      radial-gradient(60% 50% at 18% 0%, rgba(212,175,55,0.10), transparent 60%),
+      radial-gradient(50% 40% at 92% 25%, rgba(224,164,88,0.09), transparent 60%),
+      radial-gradient(70% 50% at 50% 110%, rgba(212,175,55,0.06), transparent 60%),
+      #FDFBF7;
+    background-attachment: fixed, fixed, fixed, fixed, fixed;
+  }
+
+  .cursor-dot, .cursor-ring { position:fixed; top:0; left:0; pointer-events:none; z-index:100; transform:translate(-50%,-50%); }
+  .cursor-dot { width:5px; height:5px; background:#D4AF37; border-radius:50%; }
+  .cursor-ring { width:38px; height:38px; border:1px solid rgba(212,175,55,0.7); border-radius:50%; transition: width .25s ease, height .25s ease, border-color .25s ease, background .25s ease; }
+  .cursor-ring.hover { width:72px; height:72px; background:rgba(212,175,55,0.10); border-color:#D4AF37; }
+  @media (max-width: 768px) {
+    body { cursor:auto; overflow-x:hidden; }
+    .cursor-dot, .cursor-ring { display:none; }
+  }
+
+  .hairline { height:1px; background:linear-gradient(90deg, transparent, rgba(212,175,55,.55), transparent); }
+
+  .btn-gold { position:relative; overflow:hidden; isolation:isolate; transition: color .4s ease; }
+  .btn-gold::after { content:""; position:absolute; inset:0; background:#D4AF37; transform: translateY(101%); transition: transform .55s cubic-bezier(.83,.01,.18,1); z-index:-1; }
+  .btn-gold:hover::after { transform: translateY(0); }
+  .btn-gold:hover { color:#FDFBF7; }
+
+  .nav-overlay { clip-path: circle(0% at calc(100% - 50px) 50px); transition: clip-path .9s cubic-bezier(.83,.01,.18,1); pointer-events:none; }
+  .nav-overlay.open { clip-path: circle(160% at calc(100% - 50px) 50px); pointer-events:auto; }
+
+  .dish { position:relative; }
+  .dish .name { font-family:'Cormorant Garamond', serif; }
+  .dish .badge { font-size:9px; letter-spacing:0.3em; }
+
+  /* dotted leader between dish name and price/marker */
+  .dish-row { display:flex; align-items:baseline; gap:.75rem; }
+  .dish-row .dots { flex:1; height:1px; border-bottom:1px dotted rgba(212,175,55,0.5); transform:translateY(-4px); }
+
+  /* ──────────────────────────────────────────────────────────────
+     Mobile-first overrides (≤ 768px)
+     ────────────────────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    img { max-width: 100%; }
+    img:not([class*="h-"]):not([class*="object-"]) { height: auto; }
+
+    /* Trim section padding so chapters don't feel stretched */
+    .py-24 { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+    .py-32 { padding-top: 4rem; padding-bottom: 4rem; }
+    .pt-40 { padding-top: 7rem; }
+    .pt-56 { padding-top: 7rem; }
+    .pb-24 { padding-bottom: 3.5rem; }
+
+    /* Menu hero "The full Menu, built to share." — keep the wrap clean */
+    h1.text-6xl, h1.text-7xl, h1.text-9xl { font-size: 3.25rem; line-height: 0.95; }
+
+    /* Chapter headings — fit "Snacks & small bites." comfortably */
+    h2.text-5xl, h2.text-6xl, h2.text-7xl { font-size: 2.5rem; line-height: 1.05; }
+
+    /* CTA buttons full-width and comfortable to tap */
+    .btn-gold { min-height: 48px; width: 100%; max-width: none; }
+
+    /* Nav overlay long labels */
+    #navOverlay ul a { font-size: 2.25rem; line-height: 1.1; }
+
+    /* Hamburger toggle tap target */
+    #navToggle { padding: 8px; margin: -8px; }
+
+    /* Dish rows: name + description breathing room */
+    .dish .name { font-size: 1.5rem; line-height: 1.15; }
+    .dish { padding-bottom: 1rem; }
+
+    /* Reduce inter-column gap when grids collapse to one column */
+    .gap-x-12 { column-gap: 0; }
+    .gap-y-6 { row-gap: 1.25rem; }
+
+    /* Footer giant headline scales down */
+    footer h3 { font-size: 2.5rem; line-height: 1.05; }
+  }
+</style>
+</head>
+<body class="grain mesh antialiased">
+
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<header class="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-6 flex items-center justify-between text-charcoal">
+  <a href="index.html" class="font-serif text-2xl tracking-[0.35em]" data-hover>KASTURI</a>
+  <nav class="hidden md:flex items-center gap-10 text-[11px] tracking-[0.3em] uppercase">
+    <a href="index.html#story" data-hover class="hover:text-gold transition-colors">Story</a>
+    <a href="menu.html" data-hover class="text-gold">Menu</a>
+    <a href="index.html#gallery" data-hover class="hover:text-gold transition-colors">Gallery</a>
+    <a href="index.html#location" data-hover class="hover:text-gold transition-colors">Visit</a>
+    <a href="index.html#tours" data-hover class="hover:text-gold transition-colors">Tour Groups</a>
+  </nav>
+  <button id="navToggle" class="flex items-center gap-3 text-[11px] tracking-[0.3em] uppercase" data-hover aria-label="Open menu">
+    <span class="hidden sm:inline">Menu</span>
+    <span class="flex flex-col gap-[5px]">
+      <span class="block w-7 h-px bg-current"></span>
+      <span class="block w-5 h-px bg-current ml-auto"></span>
+    </span>
+  </button>
+</header>
+
+<div id="navOverlay" class="nav-overlay fixed inset-0 z-[55] bg-ivory2 flex flex-col px-6 md:px-12 py-6">
+  <div class="flex items-center justify-between">
+    <a href="index.html" class="font-serif text-2xl tracking-[0.35em] text-charcoal" data-hover>KASTURI</a>
+    <button id="navClose" class="text-[11px] tracking-[0.3em] uppercase text-charcoal" data-hover>Close ×</button>
+  </div>
+  <div class="flex-1 grid md:grid-cols-[1.4fr_1fr] gap-10 mt-16 md:mt-24 overflow-hidden">
+    <ul class="font-serif space-y-2 md:space-y-3">
+      <li><a href="index.html#story" class="block text-5xl md:text-8xl text-charcoal hover:text-gold transition-colors" data-hover>Story</a></li>
+      <li><a href="menu.html" class="block text-5xl md:text-8xl text-gold italic" data-hover>Menu</a></li>
+      <li><a href="index.html#signature" class="block text-5xl md:text-8xl text-charcoal hover:text-gold transition-colors" data-hover>Signatures</a></li>
+      <li><a href="index.html#gallery" class="block text-5xl md:text-8xl text-charcoal hover:text-gold transition-colors" data-hover>Gallery</a></li>
+      <li><a href="index.html#location" class="block text-5xl md:text-8xl text-charcoal hover:text-gold transition-colors italic" data-hover>Visit</a></li>
+      <li><a href="index.html#tours" class="block text-5xl md:text-8xl text-charcoal hover:text-gold transition-colors" data-hover>For Tour Agencies</a></li>
+      <li><a href="index.html#private" class="block text-5xl md:text-8xl text-charcoal hover:text-gold transition-colors" data-hover>Group Dining</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- INTRO -->
+<section class="px-6 md:px-12 pt-40 md:pt-56 pb-24">
+  <div class="grid md:grid-cols-12 gap-8 items-end">
+    <div class="md:col-span-8">
+      <div class="flex items-center gap-4 mb-8">
+        <span class="hairline w-12"></span>
+        <span class="text-[10px] tracking-[0.4em] uppercase text-gold">— Our Menu</span>
+      </div>
+      <h1 class="font-serif text-charcoal leading-[0.9] text-6xl sm:text-7xl md:text-9xl">
+        The full <em class="italic text-gold">Menu</em>,
+        <br/>built to share.
+      </h1>
+    </div>
+    <div class="md:col-span-4">
+      <p class="text-ash text-sm leading-relaxed tracking-wide max-w-md">From Lucknowi tandoor and Hyderabadi dum to South Indian classics and street-side <em class="italic">chaat</em> — generous portions, honest spice, and the comfort of food made the way home makes it. Vegetarian, Jain and no-onion-no-garlic options throughout.</p>
+      <a href="index.html#private" data-hover class="btn-gold relative inline-flex items-center justify-between border border-gold/70 text-gold tracking-[0.3em] uppercase text-[11px] px-6 py-4 mt-10 max-w-xs w-full">
+        <span class="relative z-10">Book a Table</span><span class="relative z-10">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- BEST SELLERS -->
+<section class="px-6 md:px-12 py-24 border-t border-gold/20">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-4">
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— Chapter 01 / Best Sellers</div>
+      <h2 class="font-serif text-5xl md:text-6xl text-charcoal leading-[1] reveal">Must-try <em class="italic">dishes.</em></h2>
+      <p class="text-ash text-sm leading-relaxed mt-6 max-w-sm">The four plates our guests come back for — by name, by season, by memory.</p>
+    </div>
+    <div class="md:col-span-8 md:col-start-5 grid md:grid-cols-2 gap-x-12 gap-y-8">
+      <div class="dish reveal">
+        <span class="badge uppercase text-gold tracking-[0.3em]">N° 01 · Best Seller</span>
+        <div class="name text-3xl md:text-4xl text-charcoal mt-2">Hyderabadi <em class="italic">Mutton Biryani</em></div>
+        <div class="text-xs tracking-widest text-ash leading-relaxed mt-3">Fragrant basmati rice cooked with slow-spiced mutton, sealed in dough and opened tableside.</div>
+      </div>
+      <div class="dish reveal">
+        <span class="badge uppercase text-gold tracking-[0.3em]">N° 02 · Best Seller</span>
+        <div class="name text-3xl md:text-4xl text-charcoal mt-2">Authentic <em class="italic">Butter Chicken</em></div>
+        <div class="text-xs tracking-widest text-ash leading-relaxed mt-3">Tender chicken cooked in a rich, creamy tomato butter sauce.</div>
+      </div>
+      <div class="dish reveal">
+        <span class="badge uppercase text-gold tracking-[0.3em]">N° 03 · Best Seller</span>
+        <div class="name text-3xl md:text-4xl text-charcoal mt-2">Chicken <em class="italic">Tikka Masala</em></div>
+        <div class="text-xs tracking-widest text-ash leading-relaxed mt-3">Grilled chicken tikka simmered in a spiced tomato gravy.</div>
+      </div>
+      <div class="dish reveal">
+        <span class="badge uppercase text-gold tracking-[0.3em]">N° 04 · Best Seller</span>
+        <div class="name text-3xl md:text-4xl text-charcoal mt-2">Kasturi <em class="italic">Special Thali</em></div>
+        <div class="text-xs tracking-widest text-ash leading-relaxed mt-3">A curated platter of curries, breads, rice, raita and a closing sweet — the house, in nine bowls.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SNACKS -->
+<section class="px-6 md:px-12 py-24 border-t border-gold/15">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-4">
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— Chapter 02</div>
+      <h2 class="font-serif text-5xl md:text-6xl text-charcoal leading-[1] reveal">Snacks &<br/><em class="italic">small bites.</em></h2>
+      <p class="text-ash text-sm leading-relaxed mt-6 max-w-sm">Salty, crisp, made for the first sip. Eaten with the fingers, in no particular order.</p>
+    </div>
+    <div class="md:col-span-8 md:col-start-5 grid md:grid-cols-2 gap-x-12 gap-y-6">
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Salted Peanut</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Roasted, lightly salted, served warm.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Peanut <em class="italic">Masala</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Masala-spiced peanuts with onions and herbs.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Masala <em class="italic">Papad</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Crispy papad with onion-tomato masala.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Plain / Roasted Papad</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Crispy papad served plain or roasted.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">French Fries</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Salted · paprika · garlic · cheese — your choice.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Cheese <em class="italic">Garlic</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Melted mozzarella over garlic bread.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Crispy Corn</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Golden fried corn, crunchy and lightly spiced.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Nachos</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Tortilla chips with cheese, salsa and jalapeños.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOUPS & SALADS -->
+<section class="px-6 md:px-12 py-24 border-t border-gold/15">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-4">
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— Chapter 03</div>
+      <h2 class="font-serif text-5xl md:text-6xl text-charcoal leading-[1] reveal">Soups &<br/><em class="italic">salads.</em></h2>
+      <p class="text-ash text-sm leading-relaxed mt-6 max-w-sm">Quiet plates to begin a meal — green, broth-clean, and gentle on spice.</p>
+    </div>
+    <div class="md:col-span-8 md:col-start-5 grid md:grid-cols-2 gap-x-12 gap-y-6">
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Soup <span class="text-ash text-base"> · Veg / Chicken</span></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Light and flavorful Indian-style soup.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Garden <em class="italic">Green Salad</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Fresh green vegetables salad.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Tossed <em class="italic">Salad</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Mixed leaves, cucumber, tomato, lemon-olive oil.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Russian <em class="italic">Salad</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Creamy mixed vegetables salad with olive oil.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STARTERS -->
+<section class="px-6 md:px-12 py-24 border-t border-gold/15">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-4">
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— Chapter 04</div>
+      <h2 class="font-serif text-5xl md:text-6xl text-charcoal leading-[1] reveal">Starters &<br/><em class="italic">street.</em></h2>
+      <p class="text-ash text-sm leading-relaxed mt-6 max-w-sm">The chaat house and the Indo-Chinese stall, condensed onto a single page.</p>
+    </div>
+    <div class="md:col-span-8 md:col-start-5 grid md:grid-cols-2 gap-x-12 gap-y-6">
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Pani <em class="italic">Puri</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Crispy puri filled with potato and chickpeas, served with tangy water or yogurt.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Aloo <em class="italic">Puri</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Spiced potato curry served with freshly fried puffed puri.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Channa <em class="italic">Puri</em> / Chola Bhatura</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Spicy chickpea curry with fluffy deep-fried bread.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Masala <em class="italic">Dosa</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Crispy South Indian crepe with spiced potato filling.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Hara Bhara <em class="italic">Kebab</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Spinach, peas and potato patties, charred on the griddle.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Paneer / Chicken / Mutton <em class="italic">Kebab</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Tikka · Black Pepper · Achari · Ajwain · Hariyali.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Veg / Egg / Chicken / Mutton <em class="italic">Roll</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Tawa-toasted paratha rolled around your filling.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Veg / Chicken / Mutton <em class="italic">Samosa</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Crispy pastry with spiced filling.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Pakora</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Crispy gram-flour fritters with Indian spices.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Chicken Nuggets · Popcorn · Wings</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Spicy Indian-style fried chicken starters.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Veg / Chicken <em class="italic">Momo</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Steamed dumplings served with spicy dipping sauce.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Spring Rolls</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Crisp wrappers, slow-cooked vegetable filling.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Gobi <em class="italic">Manchurian</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Crispy cauliflower in Manchurian sauce.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Chicken <em class="italic">Manchurian</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Crispy chicken wings tossed in Indo-Chinese spices.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TANDOORI -->
+<section class="px-6 md:px-12 py-24 border-t border-gold/15">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-4">
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— Chapter 05</div>
+      <h2 class="font-serif text-5xl md:text-6xl text-charcoal leading-[1] reveal">From the<br/><em class="italic">tandoor.</em></h2>
+      <p class="text-ash text-sm leading-relaxed mt-6 max-w-sm">A clay oven, a slow flame, the ambient heat of an old kitchen. The pieces emerge with a quiet char.</p>
+    </div>
+    <div class="md:col-span-8 md:col-start-5 grid md:grid-cols-2 gap-x-12 gap-y-6">
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Tandoori <em class="italic">Chicken</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Yogurt-marinated chicken charred over the open flame.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Chicken <em class="italic">Tikka</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Tikka · Black Pepper · Achari · Ajwain · Hariyali.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Paneer <em class="italic">Tikka</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Indian cottage cheese, tandoor-charred with peppers.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Grilled <em class="italic">Fish Fillet</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Fish marinated in spice paste, finished in the tandoor.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VEGETARIAN MAINS -->
+<section class="px-6 md:px-12 py-24 border-t border-gold/15">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-4">
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— Chapter 06 / Vegetarian</div>
+      <h2 class="font-serif text-5xl md:text-6xl text-charcoal leading-[1] reveal">Curries —<br/><em class="italic">vegetarian.</em></h2>
+      <p class="text-ash text-sm leading-relaxed mt-6 max-w-sm">House gravies, slow-bloomed spices. Each base may be ordered with paneer, mushroom, mixed vegetables, or aloo.</p>
+    </div>
+    <div class="md:col-span-8 md:col-start-5 grid md:grid-cols-2 gap-x-12 gap-y-6">
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Paneer</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Indian cottage cheese cooked curry style — Butter Masala · Tikka Masala · Kadai · Saag · Bhurji.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Mushroom</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Fresh mushroom cooked in classic Indian curry styles.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Aloo</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Potatoes cooked with your choice of Indian flavors.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Mixed <em class="italic">Veg</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">A mix of vegetables cooked in a light, flavorful gravy.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Veg <em class="italic">Masala</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Assorted vegetables prepared in your selected style.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Bhindi · Eggplant · Gobi · Chana</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Single-ingredient sabzis, tossed dry or in light gravy.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Dal</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Lentils cooked with spices, spinach, or creamy makhani sauce.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Veg <em class="italic">Thali</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">A composed platter — two curries, dal, rice, breads, raita and a sweet.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NON-VEGETARIAN MAINS -->
+<section class="px-6 md:px-12 py-24 border-t border-gold/15">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-4">
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— Chapter 07 / Non-Vegetarian</div>
+      <h2 class="font-serif text-5xl md:text-6xl text-charcoal leading-[1] reveal">Curries —<br/><em class="italic">non-veg.</em></h2>
+      <p class="text-ash text-sm leading-relaxed mt-6 max-w-sm">Long-simmered, finished with cream or smoked ghee. Choose your base style at the table.</p>
+    </div>
+    <div class="md:col-span-8 md:col-start-5 grid md:grid-cols-2 gap-x-12 gap-y-6">
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Butter <em class="italic">Chicken</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Tender chicken cooked in a rich, creamy tomato butter sauce.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Chicken <em class="italic">Tikka Masala</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Grilled chicken tikka simmered in a spiced tomato gravy.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Chicken <em class="italic">Curry</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Chicken cooked in your choice of classic Indian curry styles.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Chicken <em class="italic">Keema</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Minced chicken slow-cooked with peas and warm spices.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Mutton <em class="italic">Curry</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Halal mutton simmered in rich, flavorful Indian curry varieties.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Mutton <em class="italic">Keema</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Deep-flavoured minced mutton with aromatic Indian spices.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Fish <em class="italic">Curry</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Tender fish prepared in your selected curry base.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Shrimp <em class="italic">Curry</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Shrimp simmered in spiced, flavorful Indian sauces.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Egg <em class="italic">Curry</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Boiled eggs cooked in aromatic Indian curry styles.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Non-Veg <em class="italic">Thali</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">A composed platter — chicken, mutton, dal, rice, breads, raita and a sweet.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIRYANI -->
+<section class="px-6 md:px-12 py-24 border-t border-gold/15">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-4">
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— Chapter 08</div>
+      <h2 class="font-serif text-5xl md:text-6xl text-charcoal leading-[1] reveal">Biryani —<br/><em class="italic">sealed dum.</em></h2>
+      <p class="text-ash text-sm leading-relaxed mt-6 max-w-sm">Long-grain basmati layered with marinated meats or vegetables, sealed beneath dough and opened tableside. Served with raita and salaan.</p>
+    </div>
+    <div class="md:col-span-8 md:col-start-5 grid md:grid-cols-2 gap-x-12 gap-y-6">
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Mutton <em class="italic">Biryani</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Fragrant basmati rice cooked with spiced mutton.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Chicken <em class="italic">Biryani</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Aromatic biryani with tender chicken and saffron.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Veg <em class="italic">Biryani</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Aromatic biryani with seasonal vegetables.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Egg <em class="italic">Biryani</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Aromatic biryani with your choice of filling.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RICE -->
+<section class="px-6 md:px-12 py-24 border-t border-gold/15">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-4">
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— Chapter 09</div>
+      <h2 class="font-serif text-5xl md:text-6xl text-charcoal leading-[1] reveal">Rice &<br/><em class="italic">pulao.</em></h2>
+      <p class="text-ash text-sm leading-relaxed mt-6 max-w-sm">Flavoured rices and pulaos. Light enough to sit beside any curry, generous enough to stand alone.</p>
+    </div>
+    <div class="md:col-span-8 md:col-start-5 grid md:grid-cols-2 gap-x-12 gap-y-6">
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Plain <em class="italic">Basmati Rice</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Long-grain basmati, steamed simply.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Special <em class="italic">Pulao</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Yellow · Green Pea · Chana · Jeera · Tomato · Lemon · Dal Khichdi.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Fried <em class="italic">Rice</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Veg · Egg · Chicken — Indo-Chinese style.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Curd <em class="italic">Rice</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Rice mixed with curd, tempered or served separately.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BREADS -->
+<section class="px-6 md:px-12 py-24 border-t border-gold/15">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-4">
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— Chapter 10</div>
+      <h2 class="font-serif text-5xl md:text-6xl text-charcoal leading-[1] reveal">Breads —<br/><em class="italic">from the tandoor.</em></h2>
+      <p class="text-ash text-sm leading-relaxed mt-6 max-w-sm">Hand-stretched, slapped onto the wall of the clay oven, served warm.</p>
+    </div>
+    <div class="md:col-span-8 md:col-start-5 grid md:grid-cols-2 gap-x-12 gap-y-6">
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Naan</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Plain · Butter · Garlic · Cheese.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Roti / <em class="italic">Chapati</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Plain Chapati · Tandoori · Butter.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Aloo <em class="italic">Kulcha</em> · Laccha</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Stuffed, layered, brushed with ghee.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Paneer <em class="italic">Kulcha</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Bread stuffed with seasoned cottage cheese.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Paratha</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Layered, griddle-cooked, plain or stuffed.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDO-CHINESE / NOODLES -->
+<section class="px-6 md:px-12 py-24 border-t border-gold/15">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-4">
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— Chapter 11</div>
+      <h2 class="font-serif text-5xl md:text-6xl text-charcoal leading-[1] reveal">Indo-Chinese &<br/><em class="italic">noodles.</em></h2>
+      <p class="text-ash text-sm leading-relaxed mt-6 max-w-sm">A street-side cousin of the menu — wok-fired, soy-bright, with a quiet Indian warmth underneath.</p>
+    </div>
+    <div class="md:col-span-8 md:col-start-5 grid md:grid-cols-2 gap-x-12 gap-y-6">
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Veg <em class="italic">Hakka Noodles</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Stir-fried noodles with vegetables and Indo-Chinese spices.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Chicken <em class="italic">Hakka Noodles</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Stir-fried noodles with chicken and Indo-Chinese spices.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Stir-Fried <em class="italic">Noodles</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Veg · Garlic · Egg · Seafood — your choice of style.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Veg <em class="italic">Stir-Fry</em> with Garlic</div>
+        <div class="text-xs tracking-widest text-ash mt-2">Quick-fired vegetables, garlic-forward, light soy.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERNATIONAL -->
+<section class="px-6 md:px-12 py-24 border-t border-gold/15">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-4">
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— Chapter 12 / International</div>
+      <h2 class="font-serif text-5xl md:text-6xl text-charcoal leading-[1] reveal">Pizza &<br/><em class="italic">pasta.</em></h2>
+      <p class="text-ash text-sm leading-relaxed mt-6 max-w-sm">A short, careful nod to Italy — mozzarella, slow tomato, and a gentle ribbon of Indian spice where it belongs.</p>
+    </div>
+    <div class="md:col-span-8 md:col-start-5 grid md:grid-cols-2 gap-x-12 gap-y-6">
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Pizza <em class="italic">Margherita</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Classic pizza with mozzarella cheese and tomato sauce.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Pizza <em class="italic">Farm-House</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Fresh vegetable-loaded pizza with mozzarella cheese.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Pizza <em class="italic">Chicken Tikka</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Topped with spiced chicken tikka, mozzarella, and tomato sauce.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Spaghetti <em class="italic">Aglio E Olio</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Garlic, olive oil, chilli flakes, parsley.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Spaghetti <em class="italic">Bolognese</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Slow tomato ragù with herbs and parmesan.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIDES / RAITA -->
+<section class="px-6 md:px-12 py-24 border-t border-gold/15">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-4">
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— Chapter 13</div>
+      <h2 class="font-serif text-5xl md:text-6xl text-charcoal leading-[1] reveal">Sides &<br/><em class="italic">yogurt.</em></h2>
+      <p class="text-ash text-sm leading-relaxed mt-6 max-w-sm">Cooling counterpoints — the spoon you reach for between bites.</p>
+    </div>
+    <div class="md:col-span-8 md:col-start-5 grid md:grid-cols-2 gap-x-12 gap-y-6">
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Yogurt / <em class="italic">Raita</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Plain · Mix Raita · Boondi · Onion · Cucumber.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Mashed Potato with <em class="italic">Pea & Cheese</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Buttered potato, peas, melted cheese.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESSERTS -->
+<section class="px-6 md:px-12 py-24 border-t border-gold/15">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-4">
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— Chapter 14</div>
+      <h2 class="font-serif text-5xl md:text-6xl text-charcoal leading-[1] reveal">Mithai &<br/><em class="italic">desserts.</em></h2>
+      <p class="text-ash text-sm leading-relaxed mt-6 max-w-sm">A small, sweet ending — milk, ghee, cardamom, and the slow-stirred kindness of an old Indian kitchen.</p>
+    </div>
+    <div class="md:col-span-8 md:col-start-5 grid md:grid-cols-2 gap-x-12 gap-y-6">
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Gulab <em class="italic">Jamun</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Soft milk dumplings soaked in warm cardamom-flavoured sugar syrup.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Rice <em class="italic">Kheer</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Sweet Indian rice pudding cooked with milk, sugar, and cardamom.</div>
+      </div>
+      <div class="dish border-b border-gold/15 pb-4 reveal">
+        <div class="name text-2xl text-charcoal">Carrot <em class="italic">Halwa</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Warm sweet carrot pudding cooked with milk, ghee, and cardamom.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / RESERVE -->
+<section class="px-6 md:px-12 py-32 border-t border-gold/20">
+  <div class="grid md:grid-cols-12 gap-10 items-end">
+    <div class="md:col-span-7">
+      <h2 class="font-serif text-5xl md:text-7xl text-charcoal leading-[1.02] reveal">A table is the <em class="italic text-gold">only</em><br/>way to read this menu.</h2>
+      <p class="text-ash text-sm leading-relaxed tracking-wide mt-8 max-w-md">Reservations are kept simple — a date, a name, the number of guests, a note for the kitchen.</p>
+    </div>
+    <div class="md:col-span-4 md:col-start-9 flex flex-col gap-4">
+      <a href="index.html#private" data-hover class="btn-gold relative inline-flex items-center justify-between border border-gold/70 text-gold tracking-[0.3em] uppercase text-[11px] px-6 py-4">
+        <span class="relative z-10">Reserve a Table</span><span class="relative z-10">→</span>
+      </a>
+      <a href="index.html" data-hover class="inline-flex items-center justify-between text-[11px] tracking-[0.3em] uppercase text-charcoal hover:text-gold transition-colors px-6 py-4 border border-charcoal/20">
+        <span>Back to Home</span><span>←</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="px-6 md:px-12 pt-20 pb-10 border-t border-gold/20">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-6">
+      <h3 class="font-serif text-5xl md:text-7xl text-charcoal leading-[1]">We'll save<br/><em class="italic text-gold">a seat</em> for you.</h3>
+    </div>
+    <div class="md:col-span-3 md:col-start-8 text-ash text-xs tracking-widest space-y-2">
+      <div class="text-gold uppercase tracking-[0.3em] text-[10px] mb-3">Visit</div>
+      <p class="text-charcoal">12D Cach Mang Thang 8</p>
+      <p class="text-charcoal">Ben Thanh Ward</p>
+      <p class="text-charcoal">Ho Chi Minh City, Vietnam</p>
+      <p class="mt-4">Open Daily · 12:00 — 24:00</p>
+      <p class="text-charcoal mt-1"><a href="tel:+84901114375" data-hover class="hover:text-gold transition-colors">+84 90 111 4375</a></p>
+    </div>
+    <div class="md:col-span-2 text-ash text-xs tracking-widest space-y-2">
+      <div class="text-gold uppercase tracking-[0.3em] text-[10px] mb-3">Follow</div>
+      <p><a href="https://www.instagram.com/kasturi.indianrestaurant?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" data-hover class="inline-flex items-center gap-2 hover:text-gold transition-colors">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/>
+        </svg>
+        Instagram
+      </a></p>
+      <p><a href="#" data-hover class="hover:text-gold transition-colors">Press</a></p>
+      <p><a href="#" data-hover class="hover:text-gold transition-colors">Careers</a></p>
+    </div>
+  </div>
+  <div class="mt-20 flex flex-col md:flex-row md:items-end justify-between gap-4 border-t border-gold/20 pt-6 text-[10px] tracking-[0.3em] uppercase text-ash">
+    <span>© Kasturi Indian Restaurant · Saigon · MMXXVI</span>
+    <span class="font-serif text-charcoal tracking-[0.5em] text-base order-first md:order-none">KASTURI</span>
+    <span>Crafted in Low Light</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (window.Lenis && !isMobile && !reduceMotion) {
+    const lenis = new Lenis({ duration: 1.4, smoothWheel: true, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    lenis.on('scroll', () => { if (window.ScrollTrigger) ScrollTrigger.update(); });
+    gsap.ticker.add(t => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  if (window.gsap) {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.reveal').forEach(el => {
+      gsap.from(el, { y: isMobile ? 18 : 36, opacity: 0, duration: isMobile ? 0.7 : 0.9, ease: 'expo.out',
+        scrollTrigger: { trigger: el, start: 'top 90%' } });
+    });
+  }
+
+  // Cursor
+  const dot = document.querySelector('.cursor-dot');
+  const ring = document.querySelector('.cursor-ring');
+  if (!isMobile && dot && ring) {
+    let mx = window.innerWidth/2, my = window.innerHeight/2, rx = mx, ry = my;
+    window.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
+    });
+    function loop(){
+      rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
+      requestAnimationFrame(loop);
+    }
+    loop();
+    document.querySelectorAll('[data-hover], a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+    });
+  }
+
+  // Overlay menu
+  const overlay = document.getElementById('navOverlay');
+  document.getElementById('navToggle')?.addEventListener('click', () => overlay.classList.add('open'));
+  document.getElementById('navClose')?.addEventListener('click', () => overlay.classList.remove('open'));
+})();
+</script>
+</body>
+</html>

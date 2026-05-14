@@ -1,0 +1,11 @@
+.DS_Store
+*.zip
+
+# Source assets — not deployed
+Kasturi logo svg/
+Kasuri Images/
+
+# Old test screenshots
+fullpage.png
+screenshot_full.png
+ss1.png

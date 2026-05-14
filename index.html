@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kasturi Indian Restaurant — Big Flavors for Big Gatherings</title>
+<meta name="description" content="Kasturi Indian Restaurant in Ho Chi Minh City — authentic Indian flavors, generous portions, and warm, professional service for families, friends and tour groups." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" type="image/svg+xml" href="assets/logo/kasturi-logo-cutout.svg" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ivory:    '#FDFBF7',
+        ivory2:   '#F5F0E6',
+        charcoal: '#1A1A1A',
+        charcoal2:'#2A2A2A',
+        gold:     '#D4AF37',
+        amber:    '#E0A458',
+        ash:      '#6B6B6B',
+      },
+      fontFamily: {
+        serif: ['"Cormorant Garamond"', 'serif'],
+        sans:  ['Inter', 'sans-serif'],
+      },
+    }
+  }
+}
+</script>
+<style>
+  html, body { background:#FDFBF7; color:#1A1A1A; }
+  body { font-family:'Inter', sans-serif; cursor:none; overflow-x:hidden; }
+  ::selection { background:#D4AF37; color:#FDFBF7; }
+
+  /* Subtle grain on light bg */
+  .grain::before {
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:60;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.22 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity:.35; mix-blend-mode:multiply;
+  }
+
+  /* Ivory mesh / light leak + faint diamond lattice */
+  .mesh {
+    background:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'><g fill='none' stroke='%23D4AF37' stroke-width='0.55' opacity='0.18'><path d='M45 0 L90 45 L45 90 L0 45 Z'/><circle cx='45' cy='45' r='1.6' fill='%23D4AF37' stroke='none' opacity='0.55'/><circle cx='0' cy='0' r='1.2' fill='%23D4AF37' stroke='none' opacity='0.45'/><circle cx='90' cy='0' r='1.2' fill='%23D4AF37' stroke='none' opacity='0.45'/><circle cx='0' cy='90' r='1.2' fill='%23D4AF37' stroke='none' opacity='0.45'/><circle cx='90' cy='90' r='1.2' fill='%23D4AF37' stroke='none' opacity='0.45'/></g></svg>"),
+      radial-gradient(60% 50% at 18% 0%, rgba(212,175,55,0.10), transparent 60%),
+      radial-gradient(50% 40% at 92% 25%, rgba(224,164,88,0.09), transparent 60%),
+      radial-gradient(70% 50% at 50% 110%, rgba(212,175,55,0.06), transparent 60%),
+      #FDFBF7;
+    background-attachment: fixed, fixed, fixed, fixed, fixed;
+  }
+
+  /* Custom cursor */
+  .cursor-dot, .cursor-ring { position:fixed; top:0; left:0; pointer-events:none; z-index:100; transform:translate(-50%,-50%); }
+  .cursor-dot { width:5px; height:5px; background:#D4AF37; border-radius:50%; }
+  .cursor-ring { width:38px; height:38px; border:1px solid rgba(212,175,55,0.7); border-radius:50%; transition: width .25s ease, height .25s ease, border-color .25s ease, background .25s ease; }
+  .cursor-ring.hover { width:72px; height:72px; background:rgba(212,175,55,0.10); border-color:#D4AF37; }
+  @media (max-width: 768px) {
+    body { cursor:auto; overflow-x:hidden; }
+    .cursor-dot, .cursor-ring { display:none; }
+    input, textarea { cursor:auto; }
+  }
+
+  /* Hero */
+  .hero-bg { transform:scale(1.05); }
+  .hero-mesh {
+    position:absolute; inset:0; pointer-events:none;
+    background:
+      radial-gradient(40% 45% at 85% 15%, rgba(212,175,55,0.18), transparent 65%),
+      radial-gradient(50% 50% at 50% 105%, rgba(253,251,247,0.35), transparent 60%);
+    mix-blend-mode: screen;
+    animation: meshDrift 22s ease-in-out infinite alternate;
+  }
+  @keyframes meshDrift {
+    0%   { transform: translate3d(0, 0, 0) scale(1); }
+    100% { transform: translate3d(-2%, 1.5%, 0) scale(1.06); }
+  }
+
+  /* Title — weight + dark halo to lift ivory text off the photo */
+  .title-hover {
+    transition: transform .8s cubic-bezier(.23,1,.32,1), filter .8s ease, text-shadow .8s ease;
+    will-change: transform; display:inline-block;
+    font-weight: 500;
+    text-shadow:
+      0 2px 0 rgba(10,10,10,0.55),
+      0 4px 28px rgba(10,10,10,0.75),
+      0 0 70px rgba(10,10,10,0.55);
+  }
+  .title-hover em { font-weight: 500; }
+  .title-hover:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 6px 30px rgba(212,175,55,0.55));
+    text-shadow:
+      0 2px 0 rgba(10,10,10,0.55),
+      0 0 40px rgba(212,175,55,0.55),
+      0 0 100px rgba(212,175,55,0.35);
+  }
+
+  .marquee-track { display:flex; gap:0; animation: scroll 50s linear infinite; }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .tilt-card { transform-style: preserve-3d; transition: transform .25s ease, box-shadow .4s ease; will-change: transform; }
+  .tilt-card .tilt-inner { transform: translateZ(40px); }
+  .tilt-card:hover { box-shadow: 0 30px 60px -30px rgba(212,175,55,0.35), 0 10px 30px -15px rgba(26,26,26,0.15); }
+
+  .nav-overlay { clip-path: circle(0% at calc(100% - 50px) 50px); transition: clip-path .9s cubic-bezier(.83,.01,.18,1); pointer-events:none; }
+  .nav-overlay.open { clip-path: circle(160% at calc(100% - 50px) 50px); pointer-events:auto; }
+
+  .hairline { height:1px; background:linear-gradient(90deg, transparent, rgba(212,175,55,.55), transparent); }
+
+  .btn-gold { position:relative; overflow:hidden; isolation:isolate; transition: color .4s ease; }
+  .btn-gold::after { content:""; position:absolute; inset:0; background:#D4AF37; transform: translateY(101%); transition: transform .55s cubic-bezier(.83,.01,.18,1); z-index:-1; }
+  .btn-gold:hover::after { transform: translateY(0); }
+  .btn-gold:hover { color:#FDFBF7; }
+
+  .filmstrip-track img { flex-shrink:0; }
+
+  input, textarea { cursor:none; font-family:'Inter', sans-serif; letter-spacing:0.05em; color:#1A1A1A; }
+  input:focus, textarea:focus { outline:none; }
+  input::placeholder, textarea::placeholder { color:rgba(107,107,107,0.55); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track, .hero-mesh { animation:none; }
+    .hero-bg { transform:none; }
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     Mobile-first overrides (≤ 768px)
+     The rest of the layout already stacks correctly via Tailwind's
+     mobile-first `md:` prefix. This block tightens what doesn't.
+     ────────────────────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    /* Safety net — no image ever causes horizontal scroll */
+    img { max-width: 100%; }
+    img:not([class*="h-"]):not([class*="object-"]) { height: auto; }
+
+    /* Trim aggressive vertical rhythm on phones */
+    .py-32 { padding-top: 4.5rem; padding-bottom: 4.5rem; }
+    .py-48 { padding-top: 4.5rem; padding-bottom: 4.5rem; }
+    .pt-20 { padding-top: 3rem; }
+    .pb-10 { padding-bottom: 2rem; }
+    .mt-24 { margin-top: 4rem; }
+    .mt-20 { margin-top: 3rem; }
+
+    /* Hero — give "Gatherings." comfortable margins on small phones */
+    #top h1 { font-size: 3.25rem; line-height: 0.95; }
+    #top .pb-12 { padding-bottom: 2rem; }
+    #top .pt-32 { padding-top: 6rem; }
+
+    /* Hero CTA + any capped buttons go full-width on phones */
+    #top .btn-gold,
+    #top a.btn-gold { max-width: none; width: 100%; }
+    .btn-gold { min-height: 48px; }
+
+    /* Marquee — calmer at narrow widths */
+    .marquee-track > span { font-size: 1.5rem; padding-left: 1.25rem; padding-right: 1.25rem; }
+
+    /* Nav overlay — long labels like "For Tour Agencies" fit one line */
+    #navOverlay ul a { font-size: 2.25rem; line-height: 1.1; }
+
+    /* Hamburger toggle — comfortable tap target without visual change */
+    #navToggle { padding: 8px; margin: -8px; }
+
+    /* Gallery filmstrip — broken auto-scroll is replaced by native touch swipe */
+    .filmstrip { overflow-x: auto; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; }
+    .filmstrip-track { animation: none !important; transform: none !important; gap: 0.5rem; padding-left: 1.5rem; padding-right: 1.5rem; }
+    .filmstrip-track img { height: 50vh; scroll-snap-align: start; }
+
+    /* Form fields — slightly taller tap zone */
+    input, textarea { padding-top: 0.875rem; padding-bottom: 0.875rem; min-height: 44px; }
+
+    /* Story h2 — keep "with generous portions, honest" from wrapping awkwardly */
+    #story h2 { font-size: 2rem; line-height: 1.15; }
+
+    /* Footer giant headline scales down */
+    footer h3 { font-size: 2.5rem; line-height: 1.05; }
+  }
+</style>
+</head>
+<body class="grain mesh antialiased">
+
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<header id="siteHeader" class="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-6 flex items-center justify-between text-ivory transition-[background-color,color,backdrop-filter,border-color,padding] duration-500 border-b border-transparent">
+  <a href="#top" class="font-serif text-2xl tracking-[0.35em]" data-hover>KASTURI</a>
+  <nav class="hidden md:flex items-center gap-10 text-[11px] tracking-[0.3em] uppercase">
+    <a href="#story" data-hover class="hover:text-gold transition-colors">Story</a>
+    <a href="menu.html" data-hover class="hover:text-gold transition-colors">Menu</a>
+    <a href="#gallery" data-hover class="hover:text-gold transition-colors">Gallery</a>
+    <a href="#location" data-hover class="hover:text-gold transition-colors">Visit</a>
+    <a href="#tours" data-hover class="hover:text-gold transition-colors">Tour Groups</a>
+  </nav>
+  <button id="navToggle" class="flex items-center gap-3 text-[11px] tracking-[0.3em] uppercase" data-hover aria-label="Open menu">
+    <span class="hidden sm:inline">Menu</span>
+    <span class="flex flex-col gap-[5px]">
+      <span class="block w-7 h-px bg-current"></span>
+      <span class="block w-5 h-px bg-current ml-auto"></span>
+    </span>
+  </button>
+</header>
+
+<div id="navOverlay" class="nav-overlay fixed inset-0 z-[55] bg-ivory2 flex flex-col px-6 md:px-12 py-6">
+  <div class="flex items-center justify-between">
+    <span class="font-serif text-2xl tracking-[0.35em] text-charcoal">KASTURI</span>
+    <button id="navClose" class="text-[11px] tracking-[0.3em] uppercase text-charcoal" data-hover aria-label="Close menu">Close ×</button>
+  </div>
+  <div class="flex-1 grid md:grid-cols-[1.4fr_1fr] gap-10 mt-16 md:mt-24 overflow-hidden">
+    <ul class="font-serif space-y-2 md:space-y-3">
+      <li class="overflow-hidden"><a href="#story" class="menu-item block text-5xl md:text-8xl text-charcoal hover:text-gold transition-colors" data-hover>Story</a></li>
+      <li class="overflow-hidden"><a href="menu.html" class="menu-item block text-5xl md:text-8xl text-charcoal hover:text-gold transition-colors italic" data-hover>Menu</a></li>
+      <li class="overflow-hidden"><a href="#signature" class="menu-item block text-5xl md:text-8xl text-charcoal hover:text-gold transition-colors" data-hover>Signatures</a></li>
+      <li class="overflow-hidden"><a href="#gallery" class="menu-item block text-5xl md:text-8xl text-charcoal hover:text-gold transition-colors" data-hover>Gallery</a></li>
+      <li class="overflow-hidden"><a href="#location" class="menu-item block text-5xl md:text-8xl text-charcoal hover:text-gold transition-colors italic" data-hover>Visit</a></li>
+      <li class="overflow-hidden"><a href="#tours" class="menu-item block text-5xl md:text-8xl text-charcoal hover:text-gold transition-colors" data-hover>For Tour Agencies</a></li>
+      <li class="overflow-hidden"><a href="#private" class="menu-item block text-5xl md:text-8xl text-charcoal hover:text-gold transition-colors" data-hover>Group Dining</a></li>
+    </ul>
+    <div class="hidden md:flex flex-col justify-end gap-10 text-ash text-xs tracking-widest">
+      <div>
+        <div class="text-gold uppercase tracking-[0.3em] mb-3 text-[10px]">Ho Chi Minh City</div>
+        <p class="leading-relaxed">12D Cach Mang Thang 8<br/>Ben Thanh Ward<br/>Ho Chi Minh City, Vietnam</p>
+      </div>
+      <div class="text-[10px] tracking-[0.3em] uppercase text-ash/70">Reservations · Private Events · Press</div>
+    </div>
+  </div>
+</div>
+
+<section id="top" class="relative h-screen w-full overflow-hidden">
+  <div class="absolute inset-0">
+    <img class="hero-bg w-full h-full object-cover" src="assets/img/img24.jpg" alt="Kasturi Indian Restaurant — a generous Indian spread in Ho Chi Minh City" />
+    <!-- Cinematic charcoal wash — fades to ivory at the very bottom -->
+    <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.65)_0%,rgba(10,10,10,0.55)_55%,rgba(10,10,10,0.30)_85%,rgba(253,251,247,0.95)_100%)]"></div>
+    <!-- Dark pool behind the title for max legibility -->
+    <div class="absolute inset-0 bg-[radial-gradient(55%_55%_at_28%_70%,rgba(10,10,10,0.55),transparent_72%)]"></div>
+    <!-- Subtle gold-tinted vignette -->
+    <div class="absolute inset-0 bg-[radial-gradient(85%_70%_at_50%_50%,transparent_55%,rgba(212,175,55,0.12))]"></div>
+    <!-- Animated mesh / light leak -->
+    <div class="hero-mesh"></div>
+  </div>
+  <div class="relative z-10 h-full flex flex-col justify-between px-6 md:px-12 pt-32 pb-12">
+    <div class="flex items-center gap-4">
+      <span class="hairline w-12"></span>
+      <span class="text-[10px] tracking-[0.4em] uppercase text-gold">Authentic Indian · Ho Chi Minh City</span>
+    </div>
+    <div class="grid md:grid-cols-12 items-end gap-8">
+      <h1 class="md:col-span-9 font-serif text-ivory leading-[0.9] text-6xl sm:text-7xl md:text-9xl">
+        <span class="title-hover" data-hover>
+          <span class="block overflow-hidden pb-[0.18em]"><span class="inline-block hero-line">Big <em class="italic text-gold">Flavors</em></span></span>
+          <span class="block overflow-hidden pb-[0.18em]"><span class="inline-block hero-line">for Big <em class="italic">Gatherings.</em></span></span>
+        </span>
+      </h1>
+      <div class="md:col-span-3 flex flex-col gap-6">
+        <p class="text-ivory/85 text-sm tracking-widest leading-relaxed max-w-xs">A warm, welcoming home for India's classics in Saigon — generous portions, friendly service, and food that tastes like home for guests, families and tour groups.</p>
+        <a href="#private" data-hover class="btn-gold relative inline-flex items-center justify-between border border-gold text-gold tracking-[0.3em] uppercase text-[11px] px-6 py-4 max-w-xs bg-charcoal/30 backdrop-blur-sm">
+          <span class="relative z-10">Book a Table</span>
+          <span class="relative z-10">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="flex items-end justify-between text-[10px] tracking-[0.4em] uppercase text-ivory/70">
+      <span>Scroll · Explore</span>
+      <span class="hidden sm:inline">Authentic Indian · Made for Sharing</span>
+      <span>MMXXVI</span>
+    </div>
+  </div>
+</section>
+
+<section class="border-y border-gold/25 overflow-hidden py-6 bg-ivory2/60">
+  <div class="marquee-track whitespace-nowrap">
+    <span class="font-serif italic text-3xl md:text-5xl text-charcoal/80 px-12">Hot Tandoor Breads</span>
+    <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
+    <span class="font-serif text-3xl md:text-5xl text-charcoal/80 px-12">Slow-Cooked Curries</span>
+    <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
+    <span class="font-serif italic text-3xl md:text-5xl text-charcoal/80 px-12">Generous Portions</span>
+    <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
+    <span class="font-serif text-3xl md:text-5xl text-charcoal/80 px-12">Family Recipes</span>
+    <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
+    <span class="font-serif italic text-3xl md:text-5xl text-charcoal/80 px-12">Made for Sharing</span>
+    <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
+    <span class="font-serif italic text-3xl md:text-5xl text-charcoal/80 px-12">Hot Tandoor Breads</span>
+    <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
+    <span class="font-serif text-3xl md:text-5xl text-charcoal/80 px-12">Slow-Cooked Curries</span>
+    <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
+    <span class="font-serif italic text-3xl md:text-5xl text-charcoal/80 px-12">Generous Portions</span>
+    <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
+    <span class="font-serif text-3xl md:text-5xl text-charcoal/80 px-12">Family Recipes</span>
+    <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
+    <span class="font-serif italic text-3xl md:text-5xl text-charcoal/80 px-12">Made for Sharing</span>
+    <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
+  </div>
+</section>
+
+<section id="story" class="px-6 md:px-12 py-32 md:py-48">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-4">
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-6">— Our Story</div>
+      <p class="text-ash text-sm leading-relaxed tracking-wide max-w-sm">
+        Carried from kitchens in Lucknow to the heart of Saigon, Kasturi Indian Restaurant is a warm, welcoming address for Indian families, friends and travellers — a place that tastes like home, served with the kind of care guests remember.
+      </p>
+    </div>
+    <div class="md:col-span-7 md:col-start-6">
+      <h2 class="font-serif text-4xl md:text-7xl leading-[1.05] text-charcoal reveal-text">
+        We cook the <em class="italic text-gold">classics</em><br/>
+        the way they should <em class="italic text-gold">taste</em> —<br/>
+        with generous portions, <em class="italic">honest</em> spice,<br/>
+        and the warmth of an Indian home.
+      </h2>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-12 gap-6 mt-24">
+    <div class="md:col-span-5 md:col-start-2 parallax-img">
+      <div class="overflow-hidden">
+        <img class="w-full h-[60vh] object-cover" src="assets/img/img02.jpg" alt="Tandoor-fresh dish at Kasturi" />
+      </div>
+      <div class="mt-3 flex items-center justify-between text-[10px] tracking-[0.3em] uppercase text-ash/80">
+        <span>Plate N° 04</span><span>Tandoor · 480°C</span>
+      </div>
+    </div>
+    <div class="md:col-span-4 md:col-start-8 mt-32 parallax-img">
+      <div class="overflow-hidden">
+        <img class="w-full h-[50vh] object-cover" src="assets/img/img25.jpg" alt="Inside the Kasturi dining room" />
+      </div>
+      <div class="mt-3 flex items-center justify-between text-[10px] tracking-[0.3em] uppercase text-ash/80">
+        <span>The Hall</span><span>Ben Thanh</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="signature" class="px-6 md:px-12 py-32 border-t border-gold/15">
+  <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+    <div>
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— The Signatures</div>
+      <h2 class="font-serif text-5xl md:text-7xl leading-[1] text-charcoal reveal-text">Four guest favourites,<br/><em class="italic">made for sharing.</em></h2>
+    </div>
+    <a href="menu.html" data-hover class="self-start md:self-end text-[11px] tracking-[0.3em] uppercase text-ash hover:text-gold border-b border-gold/40 pb-1">See the Full Menu →</a>
+  </div>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <article class="tilt-card bg-ivory2 border border-gold/25 p-6 group" data-hover>
+      <div class="tilt-inner">
+        <div class="overflow-hidden">
+          <img class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-105" src="assets/img/img50.png" alt="Hyderabadi Mutton Biryani" />
+        </div>
+        <div class="flex items-center justify-between mt-6 text-[10px] tracking-[0.3em] uppercase text-ash">
+          <span>N° 01</span><span>Sealed · Dum</span>
+        </div>
+        <h3 class="font-serif text-3xl mt-3 text-charcoal">Hyderabadi <em class="italic text-gold">Mutton Biryani</em></h3>
+        <p class="text-ash text-sm leading-relaxed mt-3">Long-grain basmati layered with slow-braised mutton, saffron-veiled and sealed beneath dough — opened tableside to release a perfume four centuries old.</p>
+        <div class="hairline mt-6"></div>
+        <div class="flex items-center justify-between mt-4 text-xs tracking-widest text-charcoal">
+          <span>Sealed</span><span class="text-gold">— 86</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="tilt-card bg-ivory2 border border-gold/25 p-6 group" data-hover>
+      <div class="tilt-inner">
+        <div class="overflow-hidden">
+          <img class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-105" src="assets/img/img48.png" alt="Authentic Butter Chicken" />
+        </div>
+        <div class="flex items-center justify-between mt-6 text-[10px] tracking-[0.3em] uppercase text-ash">
+          <span>N° 02</span><span>Reduced · Cream</span>
+        </div>
+        <h3 class="font-serif text-3xl mt-3 text-charcoal">Authentic <em class="italic text-gold">Butter Chicken</em></h3>
+        <p class="text-ash text-sm leading-relaxed mt-3">Tandoor-charred chicken cradled in a velvet of tomato, fenugreek, and aged butter — finished tableside with a draught of smoked ghee.</p>
+        <div class="hairline mt-6"></div>
+        <div class="flex items-center justify-between mt-4 text-xs tracking-widest text-charcoal">
+          <span>Plated</span><span class="text-gold">— 64</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="tilt-card bg-ivory2 border border-gold/25 p-6 group" data-hover>
+      <div class="tilt-inner">
+        <div class="overflow-hidden">
+          <img class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-105" src="assets/img/img47.jpeg" alt="Kasturi Special Thali" />
+        </div>
+        <div class="flex items-center justify-between mt-6 text-[10px] tracking-[0.3em] uppercase text-ash">
+          <span>N° 03</span><span>Curated · 9 Bowls</span>
+        </div>
+        <h3 class="font-serif text-3xl mt-3 text-charcoal">Kasturi <em class="italic text-gold">Special Thali</em></h3>
+        <p class="text-ash text-sm leading-relaxed mt-3">A composed silver platter — nine vessels, two breads, three chutneys, a saffron rice and a closing sweet — read as a single, gentle sentence.</p>
+        <div class="hairline mt-6"></div>
+        <div class="flex items-center justify-between mt-4 text-xs tracking-widest text-charcoal">
+          <span>Tasting</span><span class="text-gold">— 92</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="tilt-card bg-ivory2 border border-gold/25 p-6 group" data-hover>
+      <div class="tilt-inner">
+        <div class="overflow-hidden">
+          <img class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-105" src="assets/img/img49.png" alt="Chicken Tikka Masala" />
+        </div>
+        <div class="flex items-center justify-between mt-6 text-[10px] tracking-[0.3em] uppercase text-ash">
+          <span>N° 04</span><span>Charred · Spiced</span>
+        </div>
+        <h3 class="font-serif text-3xl mt-3 text-charcoal">Chicken <em class="italic text-gold">Tikka Masala</em></h3>
+        <p class="text-ash text-sm leading-relaxed mt-3">Embered chicken folded into a slow-built masala of roasted tomato, cream and a quiet ribbon of kasoori methi — the dish that travelled the world.</p>
+        <div class="hairline mt-6"></div>
+        <div class="flex items-center justify-between mt-4 text-xs tracking-widest text-charcoal">
+          <span>Plated</span><span class="text-gold">— 58</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="menu" class="px-6 md:px-12 py-32 border-t border-gold/15 grid md:grid-cols-12 gap-10">
+  <div class="md:col-span-5">
+    <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-6">— The Menu</div>
+    <h2 class="font-serif text-5xl md:text-7xl leading-[1.02] text-charcoal reveal-text">A menu built<br/>for <em class="italic">every appetite.</em></h2>
+    <p class="text-ash text-sm leading-relaxed tracking-wide mt-8 max-w-md">From slow-cooked Hyderabadi biryani to hot-from-the-tandoor breads, rich curries and cooling kulfi — built to share, generous in portion, and faithful to the way it is made at home.</p>
+    <a href="#private" data-hover class="btn-gold relative inline-flex items-center justify-between border border-gold/70 text-gold tracking-[0.3em] uppercase text-[11px] px-6 py-4 mt-10 w-full max-w-xs">
+      <span class="relative z-10">Book a Table</span><span class="relative z-10">→</span>
+    </a>
+  </div>
+  <div class="md:col-span-6 md:col-start-7 space-y-6">
+    <div class="menu-row flex items-baseline justify-between border-b border-gold/20 pb-4">
+      <div class="pr-6">
+        <div class="font-serif text-2xl md:text-3xl text-charcoal">Chaat · Pani <em class="italic">Puri</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Crispy puri · tangy tamarind water · cooling mint</div>
+      </div>
+      <div class="text-gold font-serif text-xl">I.</div>
+    </div>
+    <div class="menu-row flex items-baseline justify-between border-b border-gold/20 pb-4">
+      <div class="pr-6">
+        <div class="font-serif text-2xl md:text-3xl text-charcoal">Tandoor · Tandoori <em class="italic">Chicken</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Yogurt-marinated · charred over the open flame</div>
+      </div>
+      <div class="text-gold font-serif text-xl">II.</div>
+    </div>
+    <div class="menu-row flex items-baseline justify-between border-b border-gold/20 pb-4">
+      <div class="pr-6">
+        <div class="font-serif text-2xl md:text-3xl text-charcoal">Paneer · <em class="italic">Butter Masala</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Indian cottage cheese · creamy tomato gravy</div>
+      </div>
+      <div class="text-gold font-serif text-xl">III.</div>
+    </div>
+    <div class="menu-row flex items-baseline justify-between border-b border-gold/20 pb-4">
+      <div class="pr-6">
+        <div class="font-serif text-2xl md:text-3xl text-charcoal">Curry · Butter <em class="italic">Chicken</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Tender chicken · rich tomato-butter sauce</div>
+      </div>
+      <div class="text-gold font-serif text-xl">IV.</div>
+    </div>
+    <div class="menu-row flex items-baseline justify-between border-b border-gold/20 pb-4">
+      <div class="pr-6">
+        <div class="font-serif text-2xl md:text-3xl text-charcoal">Dum · Hyderabadi Mutton <em class="italic">Biryani</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Slow-spiced mutton · sealed in dough · opened tableside</div>
+      </div>
+      <div class="text-gold font-serif text-xl">V.</div>
+    </div>
+    <div class="menu-row flex items-baseline justify-between border-b border-gold/20 pb-4">
+      <div class="pr-6">
+        <div class="font-serif text-2xl md:text-3xl text-charcoal">Wok · Gobi <em class="italic">Manchurian</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Crispy cauliflower · Indo-Chinese spice</div>
+      </div>
+      <div class="text-gold font-serif text-xl">VI.</div>
+    </div>
+    <div class="menu-row flex items-baseline justify-between border-b border-gold/20 pb-4">
+      <div class="pr-6">
+        <div class="font-serif text-2xl md:text-3xl text-charcoal">Mithai · Gulab <em class="italic">Jamun</em></div>
+        <div class="text-xs tracking-widest text-ash mt-2">Soft milk dumplings · warm cardamom syrup</div>
+      </div>
+      <div class="text-gold font-serif text-xl">VII.</div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery" class="py-32 border-t border-gold/15 overflow-hidden">
+  <div class="px-6 md:px-12 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+    <div>
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— A Look Inside</div>
+      <h2 class="font-serif text-5xl md:text-7xl leading-[1] text-charcoal reveal-text">Around the <em class="italic">Kasturi table.</em></h2>
+    </div>
+    <span class="text-[10px] tracking-[0.3em] uppercase text-ash">Drag · Scroll · Linger</span>
+  </div>
+  <div class="filmstrip overflow-hidden">
+    <div class="filmstrip-track flex gap-4 will-change-transform pl-6 md:pl-12">
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img09.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img10.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img11.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img12.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img13.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img14.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img15.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img16.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img17.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img18.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img19.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img20.jpg" alt="" />
+    </div>
+  </div>
+</section>
+
+<section id="location" class="px-6 md:px-12 py-32 border-t border-gold/15">
+  <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-6">— Find Us in Saigon</div>
+  <h2 class="font-serif text-5xl md:text-8xl leading-[1] text-charcoal mb-16 reveal-text">Visit <em class="italic">us</em> in Saigon.</h2>
+  <div class="grid md:grid-cols-12 gap-6">
+    <article class="md:col-span-8 md:col-start-3 border border-gold/25 p-8 md:p-14 hover:border-gold/60 transition-colors group bg-ivory2/40" data-hover>
+      <div class="flex items-start justify-between mb-10">
+        <div>
+          <div class="text-gold tracking-[0.3em] uppercase text-[10px] mb-2">The House</div>
+          <h3 class="font-serif text-5xl md:text-7xl text-charcoal">Ho Chi Minh City</h3>
+        </div>
+        <span class="text-ash text-[10px] tracking-[0.3em] uppercase hidden sm:inline">10°46'N · 106°41'E</span>
+      </div>
+      <div class="overflow-hidden">
+        <img class="w-full h-[42vh] md:h-[55vh] object-cover transition-transform duration-700 group-hover:scale-105" src="assets/img/img08.jpg" alt="Kasturi Indian Restaurant — Ho Chi Minh City" />
+      </div>
+      <div class="grid md:grid-cols-3 gap-8 mt-10">
+        <div>
+          <div class="text-[10px] tracking-[0.3em] uppercase text-gold mb-3">Address</div>
+          <p class="text-charcoal text-sm leading-relaxed tracking-wide">12D Cach Mang Thang 8<br/>Ben Thanh Ward<br/>Ho Chi Minh City, Vietnam</p>
+        </div>
+        <div>
+          <div class="text-[10px] tracking-[0.3em] uppercase text-gold mb-3">Hours</div>
+          <p class="text-charcoal text-sm leading-relaxed tracking-wide">Open Every Day<br/>12:00 noon — 12:00 midnight</p>
+        </div>
+        <div>
+          <div class="text-[10px] tracking-[0.3em] uppercase text-gold mb-3">Reservations</div>
+          <p class="text-charcoal text-sm leading-relaxed tracking-wide"><a href="tel:+84901114375" data-hover class="hover:text-gold transition-colors">+84 90 111 4375</a><br/><a href="mailto:kasturiindianrestaurantd1@gmail.com" data-hover class="hover:text-gold transition-colors">kasturiindianrestaurantd1@gmail.com</a></p>
+        </div>
+      </div>
+      <div class="hairline my-8"></div>
+      <a href="#private" data-hover class="inline-block text-[11px] tracking-[0.3em] uppercase text-gold border-b border-gold/50 pb-1 hover:border-gold">Reserve a Table →</a>
+    </article>
+  </div>
+</section>
+
+<section id="tours" class="px-6 md:px-12 py-32 border-t border-gold/15 bg-charcoal text-ivory relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(60%_50%_at_85%_15%,rgba(212,175,55,0.18),transparent_60%),radial-gradient(50%_45%_at_10%_90%,rgba(224,164,88,0.10),transparent_60%)]"></div>
+  <div class="relative grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-5">
+      <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-6">— For Tour & Travel Partners</div>
+      <h2 class="font-serif text-5xl md:text-7xl leading-[1.02] text-ivory reveal-text">A taste of <em class="italic text-gold">home</em><br/>for guests far from it.</h2>
+      <p class="text-ivory/75 text-sm leading-relaxed tracking-wide mt-8 max-w-md">Kasturi is a trusted partner for tour operators and travel agencies hosting Indian groups in Ho Chi Minh City. Authentic, home-style Indian food — built for big tables, served with the warmth and professionalism your guests expect.</p>
+    </div>
+    <div class="md:col-span-6 md:col-start-7 grid sm:grid-cols-2 gap-6">
+      <div class="border border-gold/30 p-6 bg-charcoal2/60">
+        <div class="text-gold tracking-[0.3em] uppercase text-[10px] mb-3">Capacity</div>
+        <h3 class="font-serif text-2xl text-ivory mb-2">Built for big groups</h3>
+        <p class="text-ivory/70 text-sm leading-relaxed">Comfortable seating for groups of 20 to 100+, with a private hall available on request.</p>
+      </div>
+      <div class="border border-gold/30 p-6 bg-charcoal2/60">
+        <div class="text-gold tracking-[0.3em] uppercase text-[10px] mb-3">Authenticity</div>
+        <h3 class="font-serif text-2xl text-ivory mb-2">Flavors that taste like home</h3>
+        <p class="text-ivory/70 text-sm leading-relaxed">Real Indian recipes — spice levels, vegetarian, Jain and no-onion-no-garlic options — the way your guests cook at home.</p>
+      </div>
+      <div class="border border-gold/30 p-6 bg-charcoal2/60">
+        <div class="text-gold tracking-[0.3em] uppercase text-[10px] mb-3">Service</div>
+        <h3 class="font-serif text-2xl text-ivory mb-2">Professional, friendly, on-time</h3>
+        <p class="text-ivory/70 text-sm leading-relaxed">Pre-set menus, fast service for tight itineraries, Hindi-speaking staff on request, and clear coordination with your tour leader.</p>
+      </div>
+      <div class="border border-gold/30 p-6 bg-charcoal2/60">
+        <div class="text-gold tracking-[0.3em] uppercase text-[10px] mb-3">Partnership</div>
+        <h3 class="font-serif text-2xl text-ivory mb-2">Easy, agency-friendly terms</h3>
+        <p class="text-ivory/70 text-sm leading-relaxed">Transparent per-head pricing, agency commissions, invoicing in USD or VND, and recurring-group rates.</p>
+      </div>
+    </div>
+    <div class="md:col-span-12 mt-10 flex flex-col md:flex-row md:items-center justify-between gap-6 border-t border-gold/20 pt-10">
+      <p class="font-serif italic text-2xl md:text-3xl text-ivory/90 max-w-xl">Planning an itinerary for an Indian group? Let's set the table.</p>
+      <a href="#private" data-hover class="btn-gold relative inline-flex items-center justify-between border border-gold text-gold tracking-[0.3em] uppercase text-[11px] px-6 py-4 w-full md:w-auto md:min-w-[280px]">
+        <span class="relative z-10">Partner With Kasturi</span><span class="relative z-10">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="private" class="px-6 md:px-12 py-32 border-t border-gold/15 grid md:grid-cols-12 gap-10">
+  <div class="md:col-span-5">
+    <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-6">— Group Dining & Events</div>
+    <h2 class="font-serif text-5xl md:text-7xl leading-[1.02] text-charcoal reveal-text">A <em class="italic">generous</em> table for the<br/>gatherings that matter.</h2>
+    <p class="text-ash text-sm leading-relaxed tracking-wide mt-8 max-w-md">Set menus for parties of ten to a hundred — birthdays, family reunions, festivals, corporate dinners and tour groups. Friendly service, authentic Indian food, easy to plan.</p>
+    <div class="mt-12 space-y-4 text-ash text-xs tracking-[0.2em] uppercase">
+      <div class="flex items-center gap-4"><span class="text-gold">·</span> Group Set Menus</div>
+      <div class="flex items-center gap-4"><span class="text-gold">·</span> Vegetarian & Jain Options</div>
+      <div class="flex items-center gap-4"><span class="text-gold">·</span> Private Hall Bookings</div>
+      <div class="flex items-center gap-4"><span class="text-gold">·</span> Tour & Travel Group Bookings</div>
+    </div>
+  </div>
+  <form class="md:col-span-6 md:col-start-7 space-y-8" action="https://formsubmit.co/kasturiindianrestaurantd1@gmail.com" method="POST">
+    <input type="hidden" name="_subject" value="New enquiry from Kasturi website" />
+    <input type="hidden" name="_template" value="table" />
+    <input type="hidden" name="_captcha" value="false" />
+    <input type="hidden" name="_next" value="https://www.kasturi-indianrestaurant.com/thanks.html" />
+    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+    <div class="grid md:grid-cols-2 gap-6">
+      <label class="block">
+        <span class="text-[10px] tracking-[0.3em] uppercase text-ash">Name</span>
+        <input type="text" name="Name" required placeholder="Your full name" class="mt-2 w-full bg-transparent border-b border-gold/40 focus:border-gold py-3 text-charcoal transition-colors" />
+      </label>
+      <label class="block">
+        <span class="text-[10px] tracking-[0.3em] uppercase text-ash">Email</span>
+        <input type="email" name="Email" required placeholder="you@example.com" class="mt-2 w-full bg-transparent border-b border-gold/40 focus:border-gold py-3 text-charcoal transition-colors" />
+      </label>
+      <label class="block">
+        <span class="text-[10px] tracking-[0.3em] uppercase text-ash">Date</span>
+        <input type="text" name="Date" placeholder="DD / MM / YYYY" class="mt-2 w-full bg-transparent border-b border-gold/40 focus:border-gold py-3 text-charcoal transition-colors" />
+      </label>
+      <label class="block">
+        <span class="text-[10px] tracking-[0.3em] uppercase text-ash">Guests</span>
+        <input type="text" name="Guests" placeholder="20" class="mt-2 w-full bg-transparent border-b border-gold/40 focus:border-gold py-3 text-charcoal transition-colors" />
+      </label>
+    </div>
+    <label class="block">
+      <span class="text-[10px] tracking-[0.3em] uppercase text-ash">Tell us about your group</span>
+      <textarea name="Message" rows="4" placeholder="Group size, dietary needs (veg / Jain / no onion-garlic), occasion, language…" class="mt-2 w-full bg-transparent border-b border-gold/40 focus:border-gold py-3 text-charcoal transition-colors resize-none"></textarea>
+    </label>
+    <button type="submit" data-hover class="btn-gold relative inline-flex items-center justify-between border border-gold/70 text-gold tracking-[0.3em] uppercase text-[11px] px-6 py-4 w-full">
+      <span class="relative z-10">Send Enquiry</span><span class="relative z-10">→</span>
+    </button>
+  </form>
+</section>
+
+<footer class="px-6 md:px-12 pt-20 pb-10 border-t border-gold/20">
+  <div class="grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-6">
+      <h3 class="font-serif text-5xl md:text-7xl text-charcoal leading-[1] reveal-text">We'll save<br/><em class="italic text-gold">a seat</em> for you.</h3>
+    </div>
+    <div class="md:col-span-3 md:col-start-8 text-ash text-xs tracking-widest space-y-2">
+      <div class="text-gold uppercase tracking-[0.3em] text-[10px] mb-3">Visit</div>
+      <p class="text-charcoal">12D Cach Mang Thang 8</p>
+      <p class="text-charcoal">Ben Thanh Ward</p>
+      <p class="text-charcoal">Ho Chi Minh City, Vietnam</p>
+      <p class="mt-4">Open Daily · 12:00 — 24:00</p>
+      <p class="text-charcoal mt-1"><a href="tel:+84901114375" data-hover class="hover:text-gold transition-colors">+84 90 111 4375</a></p>
+    </div>
+    <div class="md:col-span-2 text-ash text-xs tracking-widest space-y-2">
+      <div class="text-gold uppercase tracking-[0.3em] text-[10px] mb-3">Follow</div>
+      <p><a href="https://www.instagram.com/kasturi.indianrestaurant?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" data-hover class="inline-flex items-center gap-2 hover:text-gold transition-colors">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/>
+        </svg>
+        Instagram
+      </a></p>
+      <p><a href="#" data-hover class="hover:text-gold transition-colors">Press</a></p>
+      <p><a href="#" data-hover class="hover:text-gold transition-colors">Careers</a></p>
+    </div>
+  </div>
+  <div class="mt-20 flex flex-col md:flex-row md:items-end justify-between gap-4 border-t border-gold/20 pt-6 text-[10px] tracking-[0.3em] uppercase text-ash">
+    <span>© Kasturi Indian Restaurant · Saigon · MMXXVI</span>
+    <span class="font-serif text-charcoal tracking-[0.5em] text-base order-first md:order-none">KASTURI</span>
+    <span>Crafted in Low Light</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let lenis = null;
+  if (window.Lenis && !isMobile && !reduceMotion) {
+    lenis = new Lenis({ duration: 1.4, smoothWheel: true, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    lenis.on('scroll', () => { if (window.ScrollTrigger) ScrollTrigger.update(); });
+    gsap.ticker.add(time => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        if (id && id.length > 1) {
+          const t = document.querySelector(id);
+          if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: 0, duration: 1.6 }); }
+        }
+      });
+    });
+  }
+
+  if (window.gsap) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (!reduceMotion) {
+      gsap.from('.hero-line', { yPercent: 110, duration: 1.5, stagger: 0.15, ease: 'expo.out', delay: 0.2 });
+      gsap.to('.hero-bg', { scale: 1.18, duration: 16, ease: 'none' });
+    }
+
+    gsap.utils.toArray('.reveal-text, .menu-row').forEach(el => {
+      gsap.from(el, {
+        y: isMobile ? 20 : 50, opacity: 0, duration: isMobile ? 0.8 : 1.1, ease: 'expo.out',
+        scrollTrigger: { trigger: el, start: 'top 88%' }
+      });
+    });
+
+    if (!isMobile && !reduceMotion) {
+      gsap.utils.toArray('.parallax-img').forEach(el => {
+        gsap.fromTo(el, { y: 80 }, {
+          y: -80, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      });
+
+      const strip = document.querySelector('.filmstrip-track');
+      const gallery = document.querySelector('#gallery');
+      if (strip && gallery) {
+        const distance = () => strip.scrollWidth / 2;
+        gsap.to(strip, {
+          x: () => -distance(),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: gallery,
+            start: 'top top',
+            end: () => '+=' + distance(),
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true
+          }
+        });
+      }
+    }
+    /* On mobile the .filmstrip is overflow-x:auto with scroll-snap — native touch swipe handles it. */
+  }
+
+  const dot = document.querySelector('.cursor-dot');
+  const ring = document.querySelector('.cursor-ring');
+  if (!isMobile && dot && ring) {
+    let mx = window.innerWidth/2, my = window.innerHeight/2, rx = mx, ry = my;
+    window.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
+    });
+    function loop(){
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
+      requestAnimationFrame(loop);
+    }
+    loop();
+    document.querySelectorAll('[data-hover], a, button, input, textarea').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+    });
+  }
+
+  // Header color: ivory over the dark hero, charcoal once scrolled past it
+  const header = document.getElementById('siteHeader');
+  const hero = document.getElementById('top');
+  if (header && hero) {
+    const scrolledClasses = ['bg-ivory/85','backdrop-blur-md','border-gold/20','shadow-[0_1px_0_rgba(212,175,55,0.08)]','py-4'];
+    const updateHeader = () => {
+      const threshold = hero.offsetTop + hero.offsetHeight - 120;
+      if (window.scrollY > threshold) {
+        header.classList.remove('text-ivory','py-6');
+        header.classList.add('text-charcoal', ...scrolledClasses);
+      } else {
+        header.classList.remove('text-charcoal', ...scrolledClasses);
+        header.classList.add('text-ivory','py-6');
+      }
+    };
+    window.addEventListener('scroll', updateHeader, { passive: true });
+    window.addEventListener('resize', updateHeader);
+    updateHeader();
+  }
+
+  const overlay = document.getElementById('navOverlay');
+  const toggle = document.getElementById('navToggle');
+  const close = document.getElementById('navClose');
+  function openMenu(){
+    overlay.classList.add('open');
+    if (window.gsap) {
+      gsap.fromTo('.menu-item', { y: 140, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1, ease: 'expo.out', stagger: 0.08, delay: 0.35 });
+    }
+  }
+  function closeMenu(){ overlay.classList.remove('open'); }
+  toggle && toggle.addEventListener('click', openMenu);
+  close && close.addEventListener('click', closeMenu);
+  overlay && overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+  if (!isMobile && !reduceMotion) {
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `perspective(900px) rotateY(${x*8}deg) rotateX(${-y*8}deg) translateY(-6px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(900px) rotateY(0) rotateX(0) translateY(0)';
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>
