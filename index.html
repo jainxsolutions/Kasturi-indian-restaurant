@@ -162,8 +162,9 @@ tailwind.config = {
     #top a.btn-gold { max-width: none; width: 100%; }
     .btn-gold { min-height: 48px; }
 
-    /* Marquee — calmer at narrow widths */
+    /* Marquee — calmer at narrow widths, but faster pace so words don't crawl */
     .marquee-track > span { font-size: 1.5rem; padding-left: 1.25rem; padding-right: 1.25rem; }
+    .marquee-track { animation-duration: 22s; }
 
     /* Nav overlay — long labels like "For Tour Agencies" fit one line */
     #navOverlay ul a { font-size: 2.25rem; line-height: 1.1; }
@@ -171,10 +172,15 @@ tailwind.config = {
     /* Hamburger toggle — comfortable tap target without visual change */
     #navToggle { padding: 8px; margin: -8px; }
 
-    /* Gallery filmstrip — broken auto-scroll is replaced by native touch swipe */
-    .filmstrip { overflow-x: auto; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; }
-    .filmstrip-track { animation: none !important; transform: none !important; gap: 0.5rem; padding-left: 1.5rem; padding-right: 1.5rem; }
-    .filmstrip-track img { height: 50vh; scroll-snap-align: start; }
+    /* Gallery filmstrip — auto-scrolling marquee so images move into view on mobile.
+       JS duplicates the image set; this keyframe loops the first set seamlessly. */
+    .filmstrip { overflow: hidden; }
+    .filmstrip-track { animation: filmstrip-scroll 40s linear infinite; transform: none; gap: 0.5rem; padding-left: 1.5rem; padding-right: 1.5rem; will-change: transform; }
+    .filmstrip-track img { height: 50vh; }
+    @keyframes filmstrip-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
 
     /* Form fields — slightly taller tap zone */
     input, textarea { padding-top: 0.875rem; padding-bottom: 0.875rem; min-height: 44px; }
@@ -725,7 +731,15 @@ tailwind.config = {
         });
       }
     }
-    /* On mobile the .filmstrip is overflow-x:auto with scroll-snap — native touch swipe handles it. */
+    /* On mobile the filmstrip is a pure-CSS auto-scrolling marquee.
+       Duplicate the image set so the keyframe (0 → -50%) loops seamlessly. */
+    if (isMobile) {
+      const strip = document.querySelector('.filmstrip-track');
+      if (strip && !strip.dataset.cloned) {
+        Array.from(strip.children).forEach(node => strip.appendChild(node.cloneNode(true)));
+        strip.dataset.cloned = '1';
+      }
+    }
   }
 
   const dot = document.querySelector('.cursor-dot');
