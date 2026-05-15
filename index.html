@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Kasturi Indian Restaurant — Big Flavors for Big Gatherings</title>
 <meta name="description" content="Kasturi Indian Restaurant in Ho Chi Minh City — authentic Indian flavors, generous portions, and warm, professional service for families, friends and tour groups." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -116,14 +116,22 @@ tailwind.config = {
   .nav-overlay { clip-path: circle(0% at calc(100% - 50px) 50px); transition: clip-path .9s cubic-bezier(.83,.01,.18,1); pointer-events:none; }
   .nav-overlay.open { clip-path: circle(160% at calc(100% - 50px) 50px); pointer-events:auto; }
 
+  /* Push header content below iOS status bar / notch (Safari + WhatsApp in-app). */
+  #siteHeader { padding-top: calc(1.5rem + env(safe-area-inset-top, 0px)); }
+  #siteHeader.is-scrolled { padding-top: calc(1rem + env(safe-area-inset-top, 0px)); }
+
   /* Header scrim: dark gradient strip behind the navbar while over the hero,
-     so ivory text stays legible against bright/photo backgrounds. Fades out
-     once the JS toggles the scrolled (.is-scrolled) state. */
+     so ivory text stays legible against bright/photo backgrounds. Extends
+     above the header into the safe-area zone so iOS status-bar overlay
+     doesn't reveal the hero text behind it. Fades out once the JS toggles
+     the scrolled (.is-scrolled) state. */
   #siteHeader::before {
-    content:""; position:absolute; inset:0;
-    background: linear-gradient(180deg, rgba(10,10,10,0.65) 0%, rgba(10,10,10,0.35) 55%, rgba(10,10,10,0) 100%);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
+    content:""; position:absolute;
+    top: calc(-1 * env(safe-area-inset-top, 0px));
+    left:0; right:0; bottom:0;
+    background: linear-gradient(180deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.65) 60%, rgba(10,10,10,0.35) 100%);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     z-index:-1; pointer-events:none;
     transition: opacity .5s ease;
     opacity:1;
