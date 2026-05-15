@@ -116,6 +116,21 @@ tailwind.config = {
   .nav-overlay { clip-path: circle(0% at calc(100% - 50px) 50px); transition: clip-path .9s cubic-bezier(.83,.01,.18,1); pointer-events:none; }
   .nav-overlay.open { clip-path: circle(160% at calc(100% - 50px) 50px); pointer-events:auto; }
 
+  /* Header scrim: dark gradient strip behind the navbar while over the hero,
+     so ivory text stays legible against bright/photo backgrounds. Fades out
+     once the JS toggles the scrolled (.is-scrolled) state. */
+  #siteHeader::before {
+    content:""; position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(10,10,10,0.65) 0%, rgba(10,10,10,0.35) 55%, rgba(10,10,10,0) 100%);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index:-1; pointer-events:none;
+    transition: opacity .5s ease;
+    opacity:1;
+  }
+  #siteHeader.is-scrolled::before { opacity:0; }
+  #siteHeader > * { position:relative; }
+
   .hairline { height:1px; background:linear-gradient(90deg, transparent, rgba(212,175,55,.55), transparent); }
 
   .btn-gold { position:relative; overflow:hidden; isolation:isolate; transition: color .4s ease; }
@@ -805,9 +820,9 @@ tailwind.config = {
       const threshold = hero.offsetTop + hero.offsetHeight - 220;
       if (window.scrollY > threshold) {
         header.classList.remove('text-ivory','py-6');
-        header.classList.add('text-charcoal', ...scrolledClasses);
+        header.classList.add('text-charcoal','is-scrolled', ...scrolledClasses);
       } else {
-        header.classList.remove('text-charcoal', ...scrolledClasses);
+        header.classList.remove('text-charcoal','is-scrolled', ...scrolledClasses);
         header.classList.add('text-ivory','py-6');
       }
     };
