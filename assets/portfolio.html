@@ -5,7 +5,7 @@
 <title>Kasturi · Corporate Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=block" rel="stylesheet">
 <style>
   :root {
     --ivory: #FDFBF7;
@@ -98,15 +98,14 @@
   .cover .scrim {
     position: absolute; inset: 0;
     background:
-      radial-gradient(55% 55% at 28% 70%, rgba(10,10,10,0.55), transparent 72%),
-      linear-gradient(180deg, rgba(10,10,10,0.65) 0%, rgba(10,10,10,0.55) 55%, rgba(10,10,10,0.30) 85%, rgba(10,10,10,0.55) 100%);
+      radial-gradient(60% 60% at 28% 70%, rgba(10,10,10,0.78), transparent 72%),
+      linear-gradient(180deg, rgba(10,10,10,0.65) 0%, rgba(10,10,10,0.55) 55%, rgba(10,10,10,0.45) 85%, rgba(10,10,10,0.65) 100%);
   }
   .cover .gold-mesh {
     position: absolute; inset: 0;
     background:
       radial-gradient(40% 45% at 85% 15%, rgba(212,175,55,0.18), transparent 65%),
       radial-gradient(50% 50% at 50% 105%, rgba(253,251,247,0.20), transparent 60%);
-    mix-blend-mode: screen;
   }
   .cover .frame {
     position: absolute;
@@ -136,7 +135,6 @@
     font-size: 64pt;
     line-height: 0.95;
     color: var(--ivory);
-    text-shadow: 0 2px 0 rgba(10,10,10,0.55), 0 4px 28px rgba(10,10,10,0.75);
   }
   .cover h1 em { font-style: italic; color: var(--gold); font-weight: 500; }
   .cover .lede {
@@ -214,9 +212,10 @@
     position: relative;
   }
   .lucknow-photo .caption {
-    position: absolute; left: 8mm; bottom: 8mm; right: 8mm;
+    position: absolute; left: 0; bottom: 0; right: 0;
+    padding: 14mm 8mm 8mm;
     color: var(--ivory);
-    text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%);
   }
   .lucknow-photo .caption .k { color: var(--gold); font-size: 8pt; letter-spacing: 0.4em; text-transform: uppercase; }
   .lucknow-photo .caption .t { font-family: 'Cormorant Garamond', serif; font-size: 18pt; font-style: italic; margin-top: 2mm; }
@@ -691,13 +690,13 @@
     <div class="contact-grid">
       <div class="col">
         <div class="k">Reservations &amp; Tour Groups</div>
-        <div class="v" style="color: var(--ivory);">+84 (0) 28 xxxx xxxx
+        <div class="v" style="color: var(--ivory);">+84 90 111 4375
           <small style="color: rgba(253,251,247,0.65);">Hindi · English · Vietnamese</small>
         </div>
       </div>
       <div class="col">
         <div class="k">Email</div>
-        <div class="v" style="color: var(--ivory);">partners@kasturi.vn
+        <div class="v" style="color: var(--ivory); font-size: 12pt; word-break: break-all;">kasturiindianrestaurantd1@gmail.com
           <small style="color: rgba(253,251,247,0.65);">Group menus · catering quotes · agency rates</small>
         </div>
       </div>
