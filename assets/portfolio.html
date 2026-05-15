@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Kasturi · Corporate Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #FDFBF7;
+    --ivory2: #F5F0E5;
+    --charcoal: #1A1A1A;
+    --charcoal2: #232323;
+    --ash: #6B6B6B;
+    --gold: #D4AF37;
+    --gold-soft: rgba(212,175,55,0.25);
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 210mm;
+    font-family: 'Inter', sans-serif;
+    color: var(--charcoal);
+    background: var(--ivory);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    padding: 18mm 16mm;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    background: var(--ivory);
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* faint diamond lattice + subtle warm pools, like the site */
+  .page-bg {
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'><g fill='none' stroke='%23D4AF37' stroke-width='0.55' opacity='0.13'><path d='M45 0 L90 45 L45 90 L0 45 Z'/></g></svg>"),
+      radial-gradient(60% 50% at 18% 0%, rgba(212,175,55,0.10), transparent 60%),
+      radial-gradient(50% 40% at 92% 25%, rgba(224,164,88,0.08), transparent 60%),
+      var(--ivory);
+  }
+  .page-dark {
+    background:
+      radial-gradient(60% 60% at 85% 15%, rgba(212,175,55,0.20), transparent 60%),
+      radial-gradient(50% 50% at 10% 90%, rgba(224,164,88,0.10), transparent 60%),
+      var(--charcoal);
+    color: var(--ivory);
+  }
+  .page-dark .ash { color: rgba(253,251,247,0.70); }
+  .page-dark .charcoal { color: var(--ivory); }
+
+  .serif { font-family: 'Cormorant Garamond', serif; }
+  .gold { color: var(--gold); }
+  .ash { color: var(--ash); }
+  .italic { font-style: italic; }
+  .uppercase { text-transform: uppercase; }
+  .center { text-align: center; }
+
+  .kicker {
+    font-size: 9pt;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .hairline {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.55), transparent);
+  }
+  .hairline-solid { height: 1px; background: rgba(212,175,55,0.30); }
+
+  /* ───── Cover ───── */
+  .cover {
+    padding: 0;
+    color: var(--ivory);
+  }
+  .cover .photo {
+    position: absolute; inset: 0;
+    background-image: url("img/img24.jpg");
+    background-size: cover;
+    background-position: center;
+    filter: saturate(0.95);
+  }
+  .cover .scrim {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(55% 55% at 28% 70%, rgba(10,10,10,0.55), transparent 72%),
+      linear-gradient(180deg, rgba(10,10,10,0.65) 0%, rgba(10,10,10,0.55) 55%, rgba(10,10,10,0.30) 85%, rgba(10,10,10,0.55) 100%);
+  }
+  .cover .gold-mesh {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(40% 45% at 85% 15%, rgba(212,175,55,0.18), transparent 65%),
+      radial-gradient(50% 50% at 50% 105%, rgba(253,251,247,0.20), transparent 60%);
+    mix-blend-mode: screen;
+  }
+  .cover .frame {
+    position: absolute;
+    top: 14mm; left: 14mm; right: 14mm; bottom: 14mm;
+    border: 1px solid rgba(212,175,55,0.45);
+    pointer-events: none;
+  }
+  .cover-content {
+    position: absolute; inset: 0;
+    padding: 22mm 22mm;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .cover .top-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 8pt; letter-spacing: 0.4em; text-transform: uppercase;
+    color: rgba(253,251,247,0.85);
+  }
+  .cover .brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22pt;
+    letter-spacing: 0.35em;
+    color: var(--ivory);
+  }
+  .cover h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 64pt;
+    line-height: 0.95;
+    color: var(--ivory);
+    text-shadow: 0 2px 0 rgba(10,10,10,0.55), 0 4px 28px rgba(10,10,10,0.75);
+  }
+  .cover h1 em { font-style: italic; color: var(--gold); font-weight: 500; }
+  .cover .lede {
+    margin-top: 6mm;
+    max-width: 130mm;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: rgba(253,251,247,0.85);
+    letter-spacing: 0.02em;
+  }
+  .cover .bottom-row {
+    display: flex; justify-content: space-between; align-items: end;
+    font-size: 8pt; letter-spacing: 0.4em; text-transform: uppercase;
+    color: rgba(253,251,247,0.70);
+  }
+
+  /* ───── Common page header / footer ───── */
+  .pg-head {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 8pt; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--ash);
+    padding-bottom: 6mm;
+    margin-bottom: 10mm;
+    border-bottom: 1px solid rgba(212,175,55,0.30);
+  }
+  .pg-head .brand { font-family: 'Cormorant Garamond', serif; font-size: 14pt; letter-spacing: 0.32em; color: var(--charcoal); }
+  .page-dark .pg-head .brand { color: var(--ivory); }
+  .page-dark .pg-head { color: rgba(253,251,247,0.65); border-color: rgba(212,175,55,0.35); }
+
+  .pg-foot {
+    position: absolute; bottom: 10mm; left: 16mm; right: 16mm;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 7.5pt; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--ash);
+    padding-top: 4mm;
+    border-top: 1px solid rgba(212,175,55,0.25);
+  }
+  .page-dark .pg-foot { color: rgba(253,251,247,0.55); border-color: rgba(212,175,55,0.30); }
+
+  h2.page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 36pt;
+    line-height: 1.05;
+    color: var(--charcoal);
+    margin-top: 4mm;
+  }
+  .page-dark h2.page-title { color: var(--ivory); }
+  h2.page-title em { font-style: italic; color: var(--gold); }
+
+  p.body {
+    font-size: 10.5pt; line-height: 1.65; color: var(--ash);
+    letter-spacing: 0.01em;
+  }
+  .page-dark p.body { color: rgba(253,251,247,0.78); }
+
+  /* ───── Story page ───── */
+  .story-grid {
+    margin-top: 10mm;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10mm;
+    align-items: start;
+  }
+  .story-grid .quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22pt; line-height: 1.2; color: var(--charcoal);
+  }
+  .story-grid .quote em { font-style: italic; color: var(--gold); }
+  .lucknow-photo {
+    margin-top: 12mm;
+    width: 100%;
+    height: 95mm;
+    background-image: url("img/lucknow.jpg");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  .lucknow-photo .caption {
+    position: absolute; left: 8mm; bottom: 8mm; right: 8mm;
+    color: var(--ivory);
+    text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+  }
+  .lucknow-photo .caption .k { color: var(--gold); font-size: 8pt; letter-spacing: 0.4em; text-transform: uppercase; }
+  .lucknow-photo .caption .t { font-family: 'Cormorant Garamond', serif; font-size: 18pt; font-style: italic; margin-top: 2mm; }
+
+  /* ───── Stats / overview ───── */
+  .stats-grid {
+    margin-top: 12mm;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 8mm;
+  }
+  .stat {
+    border: 1px solid rgba(212,175,55,0.35);
+    padding: 9mm 8mm;
+    background: rgba(245,240,229,0.55);
+  }
+  .stat .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 38pt; line-height: 1;
+    color: var(--gold);
+  }
+  .stat .lbl {
+    margin-top: 5mm;
+    font-size: 8.5pt; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ash);
+  }
+  .stat .desc {
+    margin-top: 3mm; font-size: 9.5pt; line-height: 1.5; color: var(--ash);
+  }
+
+  /* ───── Branches ───── */
+  .branch-grid {
+    margin-top: 10mm;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 7mm 8mm;
+  }
+  .branch {
+    border-top: 1px solid rgba(212,175,55,0.40);
+    padding-top: 5mm;
+  }
+  .branch .row1 {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 4mm;
+    margin-bottom: 2.5mm;
+  }
+  .branch .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 18pt; line-height: 1.1; color: var(--charcoal);
+  }
+  .branch .seats {
+    font-size: 8pt; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); white-space: nowrap;
+  }
+  .branch .addr {
+    font-size: 9.5pt; line-height: 1.5; color: var(--ash);
+  }
+
+  /* ───── Services ───── */
+  .svc-grid {
+    margin-top: 10mm;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 7mm;
+  }
+  .svc {
+    border: 1px solid rgba(212,175,55,0.35);
+    padding: 8mm;
+    background: var(--ivory);
+  }
+  .svc .k { font-size: 8pt; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+  .svc .h { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 22pt; margin-top: 3mm; color: var(--charcoal); }
+  .svc .p { margin-top: 4mm; font-size: 10pt; line-height: 1.55; color: var(--ash); }
+  .svc ul { margin-top: 5mm; list-style: none; padding: 0; }
+  .svc ul li {
+    font-size: 9pt; line-height: 1.7; color: var(--ash);
+    padding-left: 6mm; position: relative;
+  }
+  .svc ul li::before { content: "·"; position: absolute; left: 0; color: var(--gold); font-size: 14pt; line-height: 1; top: -0.5mm; }
+
+  /* ───── Dishes ───── */
+  .dish-grid {
+    margin-top: 8mm;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 7mm;
+  }
+  .dish {
+    border: 1px solid rgba(212,175,55,0.30);
+    background: rgba(245,240,229,0.55);
+    padding: 4mm;
+  }
+  .dish .ph {
+    width: 100%; height: 40mm; background-size: cover; background-position: center;
+  }
+  .dish .meta {
+    display: flex; justify-content: space-between; margin-top: 3mm;
+    font-size: 7.5pt; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ash);
+  }
+  .dish .meta .gold { color: var(--gold); }
+  .dish .name {
+    font-family: 'Cormorant Garamond', serif; font-weight: 500;
+    font-size: 14pt; margin-top: 2mm; color: var(--charcoal); line-height: 1.15;
+  }
+  .dish .name em { font-style: italic; color: var(--gold); }
+  .dish .desc { margin-top: 2mm; font-size: 8.5pt; line-height: 1.45; color: var(--ash); }
+
+  /* ───── Gallery ───── */
+  .gallery-grid {
+    margin-top: 8mm;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 70mm 50mm 50mm;
+    gap: 4mm;
+  }
+  .gphoto { background-size: cover; background-position: center; }
+  .g1 { grid-column: 1 / 2; grid-row: 1 / 2; }
+  .g2 { grid-column: 2 / 3; grid-row: 1 / 2; }
+  .g3 { grid-column: 1 / 2; grid-row: 2 / 4; }
+  .g4 { grid-column: 2 / 3; grid-row: 2 / 3; }
+  .g5 { grid-column: 2 / 3; grid-row: 3 / 4; }
+  .gallery-caption {
+    margin-top: 6mm;
+    font-size: 9pt; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ash);
+    display: flex; justify-content: space-between;
+  }
+
+  /* ───── Partners ───── */
+  .partner-grid {
+    margin-top: 10mm;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: rgba(212,175,55,0.45);
+    border: 1px solid rgba(212,175,55,0.45);
+  }
+  .partner {
+    background: var(--ivory);
+    padding: 12mm 6mm;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14pt; color: var(--charcoal);
+    min-height: 28mm;
+  }
+
+  /* ───── Closing / Contact ───── */
+  .contact-box {
+    margin-top: 12mm;
+    border: 1px solid rgba(212,175,55,0.50);
+    padding: 12mm 10mm;
+    background: rgba(245,240,229,0.60);
+  }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8mm;
+    margin-top: 8mm;
+  }
+  .contact-grid .col .k {
+    font-size: 8pt; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 3mm;
+  }
+  .contact-grid .col .v {
+    font-family: 'Cormorant Garamond', serif; font-size: 14pt; color: var(--charcoal);
+    line-height: 1.4;
+  }
+  .contact-grid .col .v small {
+    display: block; font-family: 'Inter', sans-serif; font-size: 9pt;
+    color: var(--ash); margin-top: 2mm; letter-spacing: 0.02em;
+  }
+
+  .signoff {
+    position: absolute; bottom: 22mm; left: 16mm; right: 16mm;
+    text-align: center;
+  }
+  .signoff .quote {
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16pt; color: var(--charcoal);
+  }
+  .signoff .quote em { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- ===================== PAGE 1 — COVER ===================== -->
+<section class="page cover">
+  <div class="photo"></div>
+  <div class="scrim"></div>
+  <div class="gold-mesh"></div>
+  <div class="frame"></div>
+  <div class="cover-content">
+    <div>
+      <div class="top-row">
+        <span class="brand">KASTURI</span>
+        <span>Est. 2026 · HCMC + Phu Quoc</span>
+      </div>
+    </div>
+    <div>
+      <div class="kicker" style="color: var(--gold);">— Corporate Portfolio · 2026</div>
+      <h1 style="margin-top: 8mm;">Big <em>Flavors</em><br/>for Big <em>Gatherings.</em></h1>
+      <p class="lede">A warm, welcoming home for India's classics in Saigon and Phu Quoc — generous portions, friendly service, and food that tastes like home for guests, families and tour groups.</p>
+    </div>
+    <div class="bottom-row">
+      <span>Authentic Indian · Made for Sharing</span>
+      <span>Catalog · 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PAGE 2 — OUR STORY ===================== -->
+<section class="page page-bg">
+  <div class="pg-head">
+    <span class="brand">KASTURI</span>
+    <span>Our Story · 02</span>
+  </div>
+  <div class="kicker">— Our Story</div>
+  <h2 class="page-title">Carried from <em>Lucknow</em><br/>to the heart of Saigon.</h2>
+
+  <div class="story-grid">
+    <div>
+      <p class="body">Kasturi Indian Restaurant is a warm, welcoming address for Indian families, friends and travellers — a place that tastes like home, served with the kind of care guests remember.</p>
+      <p class="body" style="margin-top: 5mm;">We cook the classics the way they should taste — with generous portions, honest spice, and the warmth of an Indian home. Our recipes are carried straight from the kitchens of Lucknow: slow-cooked curries, tandoor breads pulled hot from the oven, biryanis sealed and opened tableside.</p>
+      <p class="body" style="margin-top: 5mm;">Today we run four restaurants across Vietnam — three in Ho Chi Minh City and one on Phu Quoc — built to host everything from intimate family dinners to full coach groups of two hundred and forty.</p>
+    </div>
+    <div>
+      <div class="quote">We cook the <em>classics</em><br/>the way they should <em>taste</em> —<br/>with generous portions,<br/><em>honest</em> spice, and the warmth<br/>of an Indian home.</div>
+    </div>
+  </div>
+
+  <div class="lucknow-photo">
+    <div class="caption">
+      <div class="k">— Lucknow, India</div>
+      <div class="t">The city our kitchen still remembers.</div>
+    </div>
+  </div>
+
+  <div class="pg-foot">
+    <span>Kasturi · Corporate Portfolio</span>
+    <span>02</span>
+  </div>
+</section>
+
+<!-- ===================== PAGE 3 — OVERVIEW & EXPERIENCE ===================== -->
+<section class="page page-bg">
+  <div class="pg-head">
+    <span class="brand">KASTURI</span>
+    <span>Overview · 03</span>
+  </div>
+  <div class="kicker">— Overview &amp; Experience</div>
+  <h2 class="page-title">Four kitchens.<br/>One <em>standard</em> of hospitality.</h2>
+  <p class="body" style="margin-top: 6mm; max-width: 150mm;">From intimate dinners of ten to full coach groups of two-hundred-plus, our four restaurants are built to host, feed and look after Indian travellers — with the same recipes, the same care, and the same warm welcome at every table.</p>
+
+  <div class="stats-grid">
+    <div class="stat">
+      <div class="num">04</div>
+      <div class="lbl">Branches · HCMC + Phu Quoc</div>
+      <div class="desc">Three restaurants across Ho Chi Minh City and one on Phu Quoc, each set up for groups.</div>
+    </div>
+    <div class="stat">
+      <div class="num">10–240</div>
+      <div class="lbl">Guests per Sitting</div>
+      <div class="desc">From small family tables to full-coach groups, with private hall options on request.</div>
+    </div>
+    <div class="stat">
+      <div class="num">1,000+</div>
+      <div class="lbl">Tour Groups Served</div>
+      <div class="desc">A decade of catering to Indian leisure, business and pilgrimage groups across Vietnam.</div>
+    </div>
+    <div class="stat">
+      <div class="num">30+</div>
+      <div class="lbl">Tourism Company Partners</div>
+      <div class="desc">Recurring partnerships with leading Vietnamese DMCs and Indian tour operators.</div>
+    </div>
+  </div>
+
+  <div class="pg-foot">
+    <span>Kasturi · Corporate Portfolio</span>
+    <span>03</span>
+  </div>
+</section>
+
+<!-- ===================== PAGE 4 — BRANCHES ===================== -->
+<section class="page page-bg">
+  <div class="pg-head">
+    <span class="brand">KASTURI</span>
+    <span>Branches · 04</span>
+  </div>
+  <div class="kicker">— Our Branches</div>
+  <h2 class="page-title">Four addresses,<br/>one <em>kitchen</em>.</h2>
+  <p class="body" style="margin-top: 6mm; max-width: 150mm;">Each branch shares the same kitchen DNA — recipes, sourcing, training and standards — so a guest's experience is consistent whether they sit down in District 1 or on Grand World, Phu Quoc.</p>
+
+  <div class="branch-grid">
+    <div class="branch">
+      <div class="row1">
+        <div class="name">Kasturi</div>
+        <div class="seats">90 Seats</div>
+      </div>
+      <div class="addr">12D Cach Mang Thang 8, Ben Thanh Ward, Ho Chi Minh City</div>
+    </div>
+    <div class="branch">
+      <div class="row1">
+        <div class="name">Kolkatta Indian Restaurant</div>
+        <div class="seats">25 Seats</div>
+      </div>
+      <div class="addr">11D Nguyen Thi Minh Khai, Sai Gon Ward, Ho Chi Minh City</div>
+    </div>
+    <div class="branch">
+      <div class="row1">
+        <div class="name">Kolkatta Indian Food</div>
+        <div class="seats">240 Seats</div>
+      </div>
+      <div class="addr">Le'man Building, B1, 117 Nguyen Dinh Chieu, Xuan Hoa Ward, Ho Chi Minh City</div>
+    </div>
+    <div class="branch">
+      <div class="row1">
+        <div class="name">Parivaar Indian Restaurant</div>
+        <div class="seats">75 Seats</div>
+      </div>
+      <div class="addr">DD1-44 Grand World, Phu Quoc, Kien Giang</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 14mm; display: grid; grid-template-columns: 1fr 1fr; gap: 4mm;">
+    <div style="height: 60mm; background-image: url('img/img07.jpg'); background-size: cover; background-position: center;"></div>
+    <div style="height: 60mm; background-image: url('img/img18.jpg'); background-size: cover; background-position: center;"></div>
+  </div>
+
+  <div class="pg-foot">
+    <span>Kasturi · Corporate Portfolio</span>
+    <span>04</span>
+  </div>
+</section>
+
+<!-- ===================== PAGE 5 — SERVICES ===================== -->
+<section class="page page-bg">
+  <div class="pg-head">
+    <span class="brand">KASTURI</span>
+    <span>Services · 05</span>
+  </div>
+  <div class="kicker">— Services</div>
+  <h2 class="page-title">Two ways<br/>to <em>partner</em> with us.</h2>
+
+  <div class="svc-grid">
+    <div class="svc">
+      <div class="k">Service · 01</div>
+      <div class="h">Catering</div>
+      <p class="p">Off-site catering for events, conferences, weddings and private functions across Ho Chi Minh City — built around your numbers, your venue and your itinerary.</p>
+      <ul>
+        <li>Live tandoor and chaat counters on request</li>
+        <li>Vegetarian, Jain and no-onion-no-garlic menus</li>
+        <li>Crockery, service staff and chafing dishes provided</li>
+        <li>Per-head pricing in USD or VND</li>
+      </ul>
+    </div>
+    <div class="svc">
+      <div class="k">Service · 02</div>
+      <div class="h">Dedicated<br/>Tour-Group Dine-In</div>
+      <p class="p">Pre-set menus, fast turn-around, dedicated sections and tour-leader coordination — designed around the rhythm of a coach itinerary.</p>
+      <ul>
+        <li>15-minute lunch turn-around for groups of 40–100</li>
+        <li>Hindi-speaking staff on request</li>
+        <li>Recurring-group rates and agency commissions</li>
+        <li>Easy invoicing in USD or VND</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top: 12mm; border: 1px solid rgba(212,175,55,0.35); padding: 8mm;">
+    <div class="kicker">— Sample Group Menus</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6mm; margin-top: 6mm;">
+      <div>
+        <div style="font-family: 'Cormorant Garamond', serif; font-size: 16pt; color: var(--charcoal);">The Classic</div>
+        <p style="font-size: 9pt; color: var(--ash); line-height: 1.5; margin-top: 2mm;">Welcome chaat · Three curries · Two breads · Jeera rice · Dal · Salad · Gulab jamun</p>
+      </div>
+      <div>
+        <div style="font-family: 'Cormorant Garamond', serif; font-size: 16pt; color: var(--charcoal);">The Generous</div>
+        <p style="font-size: 9pt; color: var(--ash); line-height: 1.5; margin-top: 2mm;">Two starters · Four curries · Three breads · Biryani · Dal makhani · Salad · Two desserts</p>
+      </div>
+      <div>
+        <div style="font-family: 'Cormorant Garamond', serif; font-size: 16pt; color: var(--charcoal);">The Premium</div>
+        <p style="font-size: 9pt; color: var(--ash); line-height: 1.5; margin-top: 2mm;">Live counters · Six curries · Four breads · Hyderabadi biryani · Tandoori platter · Three desserts</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-foot">
+    <span>Kasturi · Corporate Portfolio</span>
+    <span>05</span>
+  </div>
+</section>
+
+<!-- ===================== PAGE 6 — SIGNATURE DISHES ===================== -->
+<section class="page page-bg">
+  <div class="pg-head">
+    <span class="brand">KASTURI</span>
+    <span>Kitchen · 06</span>
+  </div>
+  <div class="kicker">— From Our Kitchen</div>
+  <h2 class="page-title" style="font-size: 30pt;">Signature <em>dishes.</em></h2>
+  <p class="body" style="margin-top: 4mm; max-width: 150mm;">A small selection of the plates our guests come back for — by name, by season, by memory.</p>
+
+  <div class="dish-grid" style="margin-top: 6mm;">
+    <div class="dish">
+      <div class="ph" style="background-image: url('img/img50.png');"></div>
+      <div class="meta"><span>N° 01 · Best Seller</span><span class="gold">— Lucknow</span></div>
+      <div class="name">Hyderabadi <em>Mutton Biryani</em></div>
+      <div class="desc">Long-grain basmati layered with slow-braised mutton, saffron-veiled and sealed beneath dough — opened tableside to release a perfume four centuries old.</div>
+    </div>
+    <div class="dish">
+      <div class="ph" style="background-image: url('img/img48.png');"></div>
+      <div class="meta"><span>N° 02 · Best Seller</span><span class="gold">— Punjab</span></div>
+      <div class="name">Authentic <em>Butter Chicken</em></div>
+      <div class="desc">Tender chicken cooked in a rich, creamy tomato butter sauce — built from a base of charred tandoori chicken and a long-cooked makhani gravy.</div>
+    </div>
+    <div class="dish">
+      <div class="ph" style="background-image: url('img/img47.jpeg');"></div>
+      <div class="meta"><span>N° 03 · Signature</span><span class="gold">— House</span></div>
+      <div class="name">Kasturi <em>Special Thali</em></div>
+      <div class="desc">A composed silver platter — nine vessels, two breads, three chutneys, a saffron rice and a closing sweet — read as a single, gentle sentence.</div>
+    </div>
+    <div class="dish">
+      <div class="ph" style="background-image: url('img/img49.png');"></div>
+      <div class="meta"><span>N° 04 · Best Seller</span><span class="gold">— North India</span></div>
+      <div class="name">Chicken <em>Tikka Masala</em></div>
+      <div class="desc">Grilled chicken tikka simmered in a spiced tomato-cream gravy, finished with a swirl of butter and a dusting of kasuri methi.</div>
+    </div>
+  </div>
+
+  <div class="pg-foot">
+    <span>Kasturi · Corporate Portfolio</span>
+    <span>06</span>
+  </div>
+</section>
+
+<!-- ===================== PAGE 7 — VENUE GALLERY ===================== -->
+<section class="page page-bg">
+  <div class="pg-head">
+    <span class="brand">KASTURI</span>
+    <span>Venues · 07</span>
+  </div>
+  <div class="kicker">— Inside Our Restaurants</div>
+  <h2 class="page-title">A few <em>quiet</em><br/>moments at the table.</h2>
+
+  <div class="gallery-grid">
+    <div class="gphoto g1" style="background-image: url('img/img17.jpg');"></div>
+    <div class="gphoto g2" style="background-image: url('img/img18.jpg');"></div>
+    <div class="gphoto g3" style="background-image: url('img/img35.jpg');"></div>
+    <div class="gphoto g4" style="background-image: url('img/img07.jpg');"></div>
+    <div class="gphoto g5" style="background-image: url('img/img41.jpg');"></div>
+  </div>
+
+  <div class="gallery-caption">
+    <span>Light · Linen · Spice · Quiet</span>
+    <span>HCMC · Phu Quoc</span>
+  </div>
+
+  <div class="pg-foot">
+    <span>Kasturi · Corporate Portfolio</span>
+    <span>07</span>
+  </div>
+</section>
+
+<!-- ===================== PAGE 8 — PARTNERS + CONTACT ===================== -->
+<section class="page page-dark">
+  <div class="pg-head">
+    <span class="brand">KASTURI</span>
+    <span>Partners &amp; Contact · 08</span>
+  </div>
+  <div class="kicker">— Our Golden Partners</div>
+  <h2 class="page-title">Trusted by the names<br/>that <em>move</em> India through Vietnam.</h2>
+
+  <div class="partner-grid">
+    <div class="partner">Viettravel</div>
+    <div class="partner">Vietnam Lotus</div>
+    <div class="partner">Asian Classic Travel</div>
+    <div class="partner">Mekong Vacation</div>
+    <div class="partner">Viethind DMC</div>
+    <div class="partner">Indovietnam Travel DMC</div>
+  </div>
+
+  <div class="contact-box" style="background: rgba(35,35,35,0.65); border-color: rgba(212,175,55,0.45);">
+    <div class="kicker">— Plan a Group · Plan a Catering</div>
+    <h3 style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26pt; color: var(--ivory); margin-top: 4mm;">Let's set the <em style="color: var(--gold); font-style: italic;">table</em>.</h3>
+
+    <div class="contact-grid">
+      <div class="col">
+        <div class="k">Reservations &amp; Tour Groups</div>
+        <div class="v" style="color: var(--ivory);">+84 (0) 28 xxxx xxxx
+          <small style="color: rgba(253,251,247,0.65);">Hindi · English · Vietnamese</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="k">Email</div>
+        <div class="v" style="color: var(--ivory);">partners@kasturi.vn
+          <small style="color: rgba(253,251,247,0.65);">Group menus · catering quotes · agency rates</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="k">Head Office</div>
+        <div class="v" style="color: var(--ivory);">12D Cach Mang Thang 8
+          <small style="color: rgba(253,251,247,0.65);">Ben Thanh Ward, Ho Chi Minh City, Vietnam</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="k">Online</div>
+        <div class="v" style="color: var(--ivory);">jainxsolutions.github.io/Kasturi-indian-restaurant
+          <small style="color: rgba(253,251,247,0.65);">Latest menus, gallery and corporate portfolio</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="position: absolute; bottom: 22mm; left: 16mm; right: 16mm; text-align: center;">
+    <div style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18pt; color: var(--ivory);">
+      A taste of <em style="color: var(--gold);">home</em> for guests far from it.
+    </div>
+    <div style="margin-top: 4mm; font-size: 8pt; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(253,251,247,0.55);">
+      Kasturi · Est. 2026 · HCMC + Phu Quoc
+    </div>
+  </div>
+
+  <div class="pg-foot" style="border-color: rgba(212,175,55,0.30);">
+    <span>Kasturi · Corporate Portfolio</span>
+    <span>08</span>
+  </div>
+</section>
+
+</body>
+</html>
