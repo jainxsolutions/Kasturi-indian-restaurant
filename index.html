@@ -172,7 +172,7 @@ tailwind.config = {
     /* Hamburger toggle — comfortable tap target without visual change */
     #navToggle { padding: 8px; margin: -8px; }
 
-    /* Gallery filmstrip — slightly tighter spacing on phones; GSAP handles the scroll-pin. */
+    /* Gallery filmstrip — slightly tighter spacing on phones. */
     .filmstrip-track { gap: 0.5rem; }
     .filmstrip-track img { height: 50vh; }
 
@@ -270,7 +270,7 @@ tailwind.config = {
     <div class="flex items-end justify-between text-[10px] tracking-[0.4em] uppercase text-ivory/70">
       <span>Scroll · Explore</span>
       <span class="hidden sm:inline">Authentic Indian · Made for Sharing</span>
-      <span>MMXXVI</span>
+      <span>EST. 2026</span>
     </div>
   </div>
 </section>
@@ -283,7 +283,9 @@ tailwind.config = {
     <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
     <span class="font-serif italic text-3xl md:text-5xl text-charcoal/80 px-12">Generous Portions</span>
     <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
-    <span class="font-serif text-3xl md:text-5xl text-charcoal/80 px-12">Family Recipes</span>
+    <span class="font-serif text-3xl md:text-5xl text-charcoal/80 px-12">Home-made Style</span>
+    <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
+    <span class="font-serif italic text-3xl md:text-5xl text-charcoal/80 px-12">Authentic Taste</span>
     <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
     <span class="font-serif italic text-3xl md:text-5xl text-charcoal/80 px-12">Made for Sharing</span>
     <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
@@ -293,7 +295,9 @@ tailwind.config = {
     <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
     <span class="font-serif italic text-3xl md:text-5xl text-charcoal/80 px-12">Generous Portions</span>
     <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
-    <span class="font-serif text-3xl md:text-5xl text-charcoal/80 px-12">Family Recipes</span>
+    <span class="font-serif text-3xl md:text-5xl text-charcoal/80 px-12">Home-made Style</span>
+    <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
+    <span class="font-serif italic text-3xl md:text-5xl text-charcoal/80 px-12">Authentic Taste</span>
     <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
     <span class="font-serif italic text-3xl md:text-5xl text-charcoal/80 px-12">Made for Sharing</span>
     <span class="font-serif text-3xl md:text-5xl text-gold px-12">·</span>
@@ -315,6 +319,22 @@ tailwind.config = {
         with generous portions, <em class="italic">honest</em> spice,<br/>
         and the warmth of an Indian home.
       </h2>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-12 gap-6 mt-24 items-end">
+    <div class="md:col-span-12 parallax-img">
+      <div class="overflow-hidden relative">
+        <img class="w-full h-[55vh] md:h-[70vh] object-cover" src="assets/img/lucknow.jpg" alt="Bara Imambara — Lucknow, the heart of our kitchen" />
+        <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_60%,rgba(10,10,10,0.55)_100%)] pointer-events-none"></div>
+        <div class="absolute bottom-6 left-6 md:bottom-10 md:left-12 text-ivory">
+          <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-3">— Lucknow, India</div>
+          <h3 class="font-serif text-3xl md:text-5xl leading-[1.05] max-w-2xl">The <em class="italic">city</em> our kitchen<br/>still remembers.</h3>
+        </div>
+      </div>
+      <div class="mt-3 flex items-center justify-between text-[10px] tracking-[0.3em] uppercase text-ash/80">
+        <span>The Roots · Bara Imambara</span><span>Lucknow · 26.85°N</span>
+      </div>
     </div>
   </div>
 
@@ -486,10 +506,10 @@ tailwind.config = {
       <div class="text-[10px] tracking-[0.4em] uppercase text-gold mb-4">— A Look Inside</div>
       <h2 class="font-serif text-5xl md:text-7xl leading-[1] text-charcoal reveal-text">Around the <em class="italic">Kasturi table.</em></h2>
     </div>
-    <span class="text-[10px] tracking-[0.3em] uppercase text-ash">Drag · Scroll · Linger</span>
+    <span class="text-[10px] tracking-[0.3em] uppercase text-ash">A Slow Drift · Hover to Pause</span>
   </div>
   <div class="filmstrip overflow-hidden">
-    <div class="filmstrip-track flex gap-4 will-change-transform pl-6 md:pl-12">
+    <div class="filmstrip-track flex gap-4 will-change-transform">
       <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img09.jpg" alt="" />
       <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img10.jpg" alt="" />
       <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img11.jpg" alt="" />
@@ -502,6 +522,18 @@ tailwind.config = {
       <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img18.jpg" alt="" />
       <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img19.jpg" alt="" />
       <img class="h-[55vh] md:h-[60vh] w-auto object-cover" src="assets/img/img20.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" aria-hidden="true" src="assets/img/img09.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" aria-hidden="true" src="assets/img/img10.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" aria-hidden="true" src="assets/img/img11.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" aria-hidden="true" src="assets/img/img12.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" aria-hidden="true" src="assets/img/img13.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" aria-hidden="true" src="assets/img/img14.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" aria-hidden="true" src="assets/img/img15.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" aria-hidden="true" src="assets/img/img16.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" aria-hidden="true" src="assets/img/img17.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" aria-hidden="true" src="assets/img/img18.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" aria-hidden="true" src="assets/img/img19.jpg" alt="" />
+      <img class="h-[55vh] md:h-[60vh] w-auto object-cover" aria-hidden="true" src="assets/img/img20.jpg" alt="" />
     </div>
   </div>
 </section>
@@ -664,7 +696,7 @@ tailwind.config = {
     </div>
   </div>
   <div class="mt-20 flex flex-col md:flex-row md:items-end justify-between gap-4 border-t border-gold/20 pt-6 text-[10px] tracking-[0.3em] uppercase text-ash">
-    <span>© Kasturi Indian Restaurant · Saigon · MMXXVI</span>
+    <span>© Kasturi Indian Restaurant · Saigon · 2026</span>
     <span class="font-serif text-charcoal tracking-[0.5em] text-base order-first md:order-none">KASTURI</span>
     <span>Crafted in Low Light</span>
   </div>
@@ -717,27 +749,28 @@ tailwind.config = {
       });
     }
 
-    /* Gallery filmstrip — pin the section and turn vertical scroll into
-       horizontal image cycling. Runs on both desktop and mobile so users
-       see every image as they scroll. */
+    /* Gallery filmstrip — continuous left-drift auto-scroll.
+       Images are duplicated in the DOM; we loop x from 0 to -halfWidth
+       so the second copy slides into place seamlessly. Pause on hover. */
     if (!reduceMotion) {
       const strip = document.querySelector('.filmstrip-track');
-      const gallery = document.querySelector('#gallery');
-      if (strip && gallery) {
-        const distance = () => Math.max(0, strip.scrollWidth - window.innerWidth);
-        gsap.to(strip, {
-          x: () => -distance(),
-          ease: 'none',
-          scrollTrigger: {
-            trigger: gallery,
-            start: 'top top',
-            end: () => '+=' + distance(),
-            scrub: 1,
-            pin: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true
-          }
-        });
+      if (strip) {
+        const startLoop = () => {
+          const halfWidth = strip.scrollWidth / 2;
+          if (halfWidth <= 0) return;
+          const pxPerSecond = 110;
+          gsap.set(strip, { x: 0 });
+          const tween = gsap.to(strip, {
+            x: -halfWidth,
+            duration: halfWidth / pxPerSecond,
+            ease: 'none',
+            repeat: -1
+          });
+          strip.addEventListener('mouseenter', () => tween.timeScale(0.15));
+          strip.addEventListener('mouseleave', () => tween.timeScale(1));
+        };
+        if (document.readyState === 'complete') startLoop();
+        else window.addEventListener('load', startLoop);
       }
     }
   }
@@ -767,9 +800,9 @@ tailwind.config = {
   const header = document.getElementById('siteHeader');
   const hero = document.getElementById('top');
   if (header && hero) {
-    const scrolledClasses = ['bg-ivory/85','backdrop-blur-md','border-gold/20','shadow-[0_1px_0_rgba(212,175,55,0.08)]','py-4'];
+    const scrolledClasses = ['bg-ivory/95','backdrop-blur-lg','border-gold/40','shadow-[0_2px_18px_-6px_rgba(26,26,26,0.18)]','py-4'];
     const updateHeader = () => {
-      const threshold = hero.offsetTop + hero.offsetHeight - 120;
+      const threshold = hero.offsetTop + hero.offsetHeight - 220;
       if (window.scrollY > threshold) {
         header.classList.remove('text-ivory','py-6');
         header.classList.add('text-charcoal', ...scrolledClasses);
