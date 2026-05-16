@@ -383,6 +383,174 @@
     font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16pt; color: var(--charcoal);
   }
   .signoff .quote em { color: var(--gold); }
+
+  /* ───── Pricing Table ───── */
+  .pricing-wrap { margin-top: 10mm; }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 38mm 1fr 1fr 1fr 1fr;
+    gap: 3mm;
+  }
+  .pricing-grid .cell {
+    padding: 5mm 4mm;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+  }
+  .pricing-grid .row-label {
+    background: linear-gradient(135deg, rgba(212,175,55,0.85), rgba(224,164,88,0.70));
+    color: var(--charcoal);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 13pt;
+    letter-spacing: 0.02em;
+    border-radius: 12mm;
+  }
+  .pricing-grid .price {
+    background: linear-gradient(135deg, rgba(245,222,170,1), rgba(229,196,134,0.90));
+    color: var(--charcoal);
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 12pt;
+    letter-spacing: 0.01em;
+    border-radius: 12mm;
+  }
+  .pricing-grid .val {
+    background: rgba(252,247,232,0.95);
+    border: 1px solid rgba(212,175,55,0.30);
+    color: var(--charcoal);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 10pt;
+    border-radius: 12mm;
+  }
+  .pricing-grid .val-dessert {
+    background: rgba(253,251,247,1);
+    border: 1px solid rgba(212,175,55,0.30);
+    color: var(--charcoal);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 12pt;
+    border-radius: 12mm;
+  }
+  .pricing-foc {
+    margin-top: 5mm;
+    background: var(--ivory);
+    border: 1px solid rgba(212,175,55,0.45);
+    border-radius: 12mm;
+    padding: 4mm;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 11pt;
+    color: var(--charcoal);
+  }
+  .pricing-foc em { font-style: italic; color: var(--gold); font-weight: 500; }
+  .pricing-notes {
+    margin-top: 8mm;
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 8mm; align-items: start;
+  }
+  .pricing-notes ul {
+    list-style: none; padding: 0; margin: 0;
+  }
+  .pricing-notes ul li {
+    font-size: 9.5pt; line-height: 1.7; color: var(--charcoal);
+    padding-left: 6mm; position: relative;
+  }
+  .pricing-notes ul li::before { content: "•"; position: absolute; left: 0; color: var(--gold); font-size: 14pt; line-height: 1; top: -0.5mm; }
+  .pricing-notes ul li.bold { font-weight: 600; }
+  .pricing-notes .alc {
+    text-align: right;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--gold);
+    font-size: 18pt;
+    line-height: 1.1;
+    font-style: italic;
+  }
+  .pricing-notes .alc small {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 8pt;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-style: normal;
+    color: var(--ash);
+    margin-top: 3mm;
+  }
+
+  /* ───── T&C Page ───── */
+  .tc-grid {
+    margin-top: 10mm;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 10mm;
+  }
+  .tc-list { display: flex; flex-direction: column; gap: 7mm; }
+  .tc-item {
+    display: grid;
+    grid-template-columns: 8mm 1fr;
+    gap: 5mm;
+    align-items: start;
+  }
+  .tc-item .icon {
+    width: 8mm; height: 8mm; border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: 11pt; font-weight: 700;
+  }
+  .tc-item h4 {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 11.5pt;
+    color: var(--gold);
+    letter-spacing: 0.01em;
+  }
+  .tc-item p {
+    margin: 2mm 0 0 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 9.5pt;
+    line-height: 1.6;
+    color: var(--charcoal);
+  }
+  .tc-item p.list-style { line-height: 1.85; }
+  .tc-aside {
+    display: flex; flex-direction: column; gap: 5mm;
+  }
+  .tc-aside .photo {
+    flex: 1; min-height: 75mm; background-size: cover; background-position: center;
+    border-radius: 5mm;
+  }
+  .tc-foc {
+    background: linear-gradient(135deg, rgba(35,28,18,0.95), rgba(70,55,30,0.85));
+    color: var(--ivory);
+    padding: 7mm 6mm;
+    border-radius: 5mm;
+    position: relative;
+  }
+  .tc-foc .k {
+    font-size: 9pt; letter-spacing: 0.4em; text-transform: uppercase;
+    color: rgba(253,251,247,0.65);
+  }
+  .tc-foc .big {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 36pt;
+    line-height: 1;
+    color: var(--ivory);
+    margin-top: 3mm;
+    letter-spacing: -0.02em;
+  }
+  .tc-foc .sub {
+    margin-top: 4mm;
+    font-size: 9.5pt;
+    line-height: 1.5;
+    color: rgba(253,251,247,0.85);
+  }
+  .tc-foc .arrow {
+    position: absolute; top: 6mm; right: 6mm;
+    color: var(--ivory); font-size: 13pt;
+  }
 </style>
 </head>
 <body>
@@ -397,7 +565,7 @@
     <div>
       <div class="top-row">
         <span class="brand">KASTURI</span>
-        <span>Est. 2026 · HCMC + Phu Quoc</span>
+        <span>Est. 2017 · HCMC + Phu Quoc</span>
       </div>
     </div>
     <div>
@@ -540,55 +708,51 @@
 <section class="page page-bg">
   <div class="pg-head">
     <span class="brand">KASTURI</span>
-    <span>Services · 05</span>
+    <span>Group Menu &amp; Services · 05</span>
   </div>
-  <div class="kicker">— Services</div>
-  <h2 class="page-title">Two ways<br/>to <em>partner</em> with us.</h2>
+  <div class="kicker">— Group Menu Options 2026</div>
+  <h2 class="page-title" style="font-size: 30pt;">Four packages,<br/>one <em>standard</em> of hospitality.</h2>
+  <p class="body" style="margin-top: 4mm; max-width: 160mm;">Thank you for your coordination and continued support. The menu options below are curated to ensure quality, comfort and a satisfying dining experience for your guests — Vegan-friendly and Jain options available on pre-notification.</p>
 
-  <div class="svc-grid">
-    <div class="svc">
-      <div class="k">Service · 01</div>
-      <div class="h">Catering</div>
-      <p class="p">Off-site catering for events, conferences, weddings and private functions across Ho Chi Minh City — built around your numbers, your venue and your itinerary.</p>
-      <ul>
-        <li>Live tandoor and chaat counters on request</li>
-        <li>Vegetarian, Jain and no-onion-no-garlic menus</li>
-        <li>Crockery, service staff and chafing dishes provided</li>
-        <li>Per-head pricing in USD or VND</li>
-      </ul>
-    </div>
-    <div class="svc">
-      <div class="k">Service · 02</div>
-      <div class="h">Dedicated<br/>Tour-Group Dine-In</div>
-      <p class="p">Pre-set menus, fast turn-around, dedicated sections and tour-leader coordination — designed around the rhythm of a coach itinerary.</p>
-      <ul>
-        <li>15-minute lunch turn-around for groups of 40–100</li>
-        <li>Hindi-speaking staff on request</li>
-        <li>Recurring-group rates and agency commissions</li>
-        <li>Easy invoicing in USD or VND</li>
-      </ul>
-    </div>
-  </div>
+  <div class="pricing-wrap">
+    <div class="pricing-grid">
+      <div class="cell row-label">Package Price</div>
+      <div class="cell price">250,000 / PAX</div>
+      <div class="cell price">300,000 / PAX</div>
+      <div class="cell price">380,000 / PAX</div>
+      <div class="cell price">450,000 / PAX</div>
 
-  <div style="margin-top: 12mm; border: 1px solid rgba(212,175,55,0.35); padding: 8mm;">
-    <div class="kicker">— Built Around Our Signature Dishes</div>
-    <p style="margin-top: 4mm; font-size: 10pt; line-height: 1.55; color: var(--ash); max-width: 150mm;">Every group menu is built around the same dishes our walk-in guests come back for — see the kitchen showcase on the next page.</p>
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6mm; margin-top: 7mm;">
-      <div>
-        <div style="font-size: 7.5pt; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);">N° 01 · Lucknow</div>
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 14pt; line-height: 1.15; color: var(--charcoal); margin-top: 2mm;">Hyderabadi <em style="font-style: italic; color: var(--gold);">Mutton Biryani</em></div>
-      </div>
-      <div>
-        <div style="font-size: 7.5pt; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);">N° 02 · Punjab</div>
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 14pt; line-height: 1.15; color: var(--charcoal); margin-top: 2mm;">Authentic <em style="font-style: italic; color: var(--gold);">Butter Chicken</em></div>
-      </div>
-      <div>
-        <div style="font-size: 7.5pt; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);">N° 03 · House</div>
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 14pt; line-height: 1.15; color: var(--charcoal); margin-top: 2mm;">Kasturi <em style="font-style: italic; color: var(--gold);">Special Thali</em></div>
-      </div>
-      <div>
-        <div style="font-size: 7.5pt; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);">N° 04 · North India</div>
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 14pt; line-height: 1.15; color: var(--charcoal); margin-top: 2mm;">Chicken <em style="font-style: italic; color: var(--gold);">Tikka Masala</em></div>
+      <div class="cell row-label">Starters</div>
+      <div class="cell val">1 veg · 1 non-veg</div>
+      <div class="cell val">1 veg · 1 non-veg</div>
+      <div class="cell val">2 veg · 2 non-veg</div>
+      <div class="cell val">3 veg · 3 non-veg</div>
+
+      <div class="cell row-label">Main Course</div>
+      <div class="cell val">2 veg · 2 non-veg</div>
+      <div class="cell val">3 veg · 2 non-veg</div>
+      <div class="cell val">3 veg · 3 non-veg</div>
+      <div class="cell val">3 veg · 3 non-veg</div>
+
+      <div class="cell row-label">Desserts</div>
+      <div class="cell val-dessert">1</div>
+      <div class="cell val-dessert">1</div>
+      <div class="cell val-dessert">2</div>
+      <div class="cell val-dessert">2</div>
+    </div>
+
+    <div class="pricing-foc">FOC 16 + 1 &nbsp;·&nbsp; <em>(VAT not included)</em></div>
+
+    <div class="pricing-notes">
+      <ul>
+        <li class="bold">All menus can be customised upon request</li>
+        <li>Jain option available with pre-notification</li>
+        <li>Suitable for Vegan-friendly groups</li>
+        <li>Pre-set menus for 15-minute lunch turn-around · Hindi-speaking staff on request</li>
+      </ul>
+      <div class="alc">
+        Or view our<br/><em>À La Carte</em> Menu
+        <small>www.kasturi-indianrestaurant.com</small>
       </div>
     </div>
   </div>
@@ -599,11 +763,73 @@
   </div>
 </section>
 
+<!-- ===================== PAGE 6 — TERMS & CONDITIONS ===================== -->
+<section class="page page-bg">
+  <div class="pg-head">
+    <span class="brand">KASTURI</span>
+    <span>Terms &amp; Conditions · 06</span>
+  </div>
+  <div class="kicker">— Group Booking Terms</div>
+  <h2 class="page-title">Terms &amp;<br/><em>Conditions.</em></h2>
+
+  <div class="tc-grid">
+    <div class="tc-list">
+      <div class="tc-item">
+        <div class="icon">✓</div>
+        <div>
+          <h4>No deposit required</h4>
+          <p>For all following bookings (20% deposit applies for the first booking only).</p>
+        </div>
+      </div>
+      <div class="tc-item">
+        <div class="icon">✓</div>
+        <div>
+          <h4>Reservation notice at least 6 hours in advance</h4>
+          <p>&amp; final confirmation 4 hours before dining time.</p>
+        </div>
+      </div>
+      <div class="tc-item">
+        <div class="icon">✓</div>
+        <div>
+          <h4>Applicable for groups of 10 guests and above</h4>
+          <p>Below 10 guests, please refer to our à la carte menu.</p>
+        </div>
+      </div>
+      <div class="tc-item">
+        <div class="icon">✓</div>
+        <div>
+          <h4>Amendment &amp; Cancellation Policy</h4>
+          <p class="list-style">
+            · After confirmation → no cancellation accepted<br/>
+            · Cancel within 6 hours → 30% charge<br/>
+            · Cancel 1 day in advance → free
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tc-aside">
+      <div class="photo" style="background-image: url('img/brochure/p5_chafing_long.jpg');"></div>
+      <div class="tc-foc">
+        <div class="arrow">→</div>
+        <div class="k">FOC</div>
+        <div class="big">16 + 1</div>
+        <div class="sub">Free for tour leader, guide &amp; driver meal — for every 16 paying guests, 1 complimentary cover included.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-foot">
+    <span>Kasturi · Corporate Portfolio</span>
+    <span>06</span>
+  </div>
+</section>
+
 <!-- ===================== PAGE 6 — SIGNATURE DISHES ===================== -->
 <section class="page page-bg">
   <div class="pg-head">
     <span class="brand">KASTURI</span>
-    <span>Kitchen · 06</span>
+    <span>Kitchen · 07</span>
   </div>
   <div class="kicker">— From Our Kitchen</div>
   <h2 class="page-title" style="font-size: 30pt;">Signature <em>dishes.</em></h2>
@@ -638,15 +864,15 @@
 
   <div class="pg-foot">
     <span>Kasturi · Corporate Portfolio</span>
-    <span>06</span>
+    <span>07</span>
   </div>
 </section>
 
-<!-- ===================== PAGE 7 — VENUE GALLERY ===================== -->
+<!-- ===================== PAGE 8 — VENUE GALLERY ===================== -->
 <section class="page page-bg">
   <div class="pg-head">
     <span class="brand">KASTURI</span>
-    <span>Venues · 07</span>
+    <span>Venues · 08</span>
   </div>
   <div class="kicker">— Inside Our Restaurants</div>
   <h2 class="page-title">A few <em>quiet</em><br/>moments at the table.</h2>
@@ -666,26 +892,26 @@
 
   <div class="pg-foot">
     <span>Kasturi · Corporate Portfolio</span>
-    <span>07</span>
+    <span>08</span>
   </div>
 </section>
 
-<!-- ===================== PAGE 8 — PARTNERS + CONTACT ===================== -->
+<!-- ===================== PAGE 9 — PARTNERS + CONTACT ===================== -->
 <section class="page page-dark">
   <div class="pg-head">
     <span class="brand">KASTURI</span>
-    <span>Partners &amp; Contact · 08</span>
+    <span>Partners &amp; Contact · 09</span>
   </div>
   <div class="kicker">— Our Golden Partners</div>
   <h2 class="page-title">Trusted by the names<br/>that <em>move</em> India through Vietnam.</h2>
 
   <div class="partner-grid">
-    <div class="partner">Viettravel</div>
-    <div class="partner">Vietnam Lotus</div>
-    <div class="partner">Asian Classic Travel</div>
-    <div class="partner">Mekong Vacation</div>
-    <div class="partner">Viethind DMC</div>
-    <div class="partner">Indovietnam Travel DMC</div>
+    <div class="partner"><span>Vietravel</span></div>
+    <div class="partner"><span>VN Lotus<br/><em style="font-style: italic; color: var(--gold);">Travel</em></span></div>
+    <div class="partner"><span>Asian Classic<br/><em style="font-style: italic;">Travels</em></span></div>
+    <div class="partner"><span>Mekong<br/><em style="font-style: italic;">Vacations</em></span></div>
+    <div class="partner"><span>Viethind</span></div>
+    <div class="partner"><span>Indovietnam<br/><em style="font-style: italic;">Travel</em></span></div>
   </div>
 
   <div class="contact-box" style="background: rgba(35,35,35,0.65); border-color: rgba(212,175,55,0.45);">
@@ -725,8 +951,8 @@
   </div>
 
   <div class="pg-foot" style="border-color: rgba(212,175,55,0.30);">
-    <span>Kasturi · Est. 2026 · HCMC + Phu Quoc</span>
-    <span>08</span>
+    <span>Kasturi · Est. 2017 · HCMC + Phu Quoc</span>
+    <span>09</span>
   </div>
 </section>
 

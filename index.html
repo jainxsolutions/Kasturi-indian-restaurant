@@ -103,7 +103,7 @@ tailwind.config = {
       0 0 100px rgba(212,175,55,0.35);
   }
 
-  .marquee-track { display:flex; gap:0; animation: scroll 50s linear infinite; }
+  .marquee-track { display:flex; gap:0; animation: scroll 38s linear infinite; }
   @keyframes scroll {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
@@ -187,7 +187,7 @@ tailwind.config = {
 
     /* Marquee — calmer at narrow widths, but faster pace so words don't crawl */
     .marquee-track > span { font-size: 1.5rem; padding-left: 1.25rem; padding-right: 1.25rem; }
-    .marquee-track { animation-duration: 22s; }
+    .marquee-track { animation-duration: 17s; }
 
     /* Nav overlay — long labels like "For Tour Agencies" fit one line */
     #navOverlay ul a { font-size: 2.25rem; line-height: 1.1; }
@@ -294,7 +294,7 @@ tailwind.config = {
     <div class="flex items-end justify-between text-[10px] tracking-[0.4em] uppercase text-ivory/70">
       <span>Scroll · Explore</span>
       <span class="hidden sm:inline">Authentic Indian · Made for Sharing</span>
-      <span>EST. 2026</span>
+      <span>EST. 2017</span>
     </div>
   </div>
 </section>
@@ -363,20 +363,36 @@ tailwind.config = {
   </div>
 
   <div class="grid md:grid-cols-12 gap-6 mt-24">
-    <div class="md:col-span-5 md:col-start-2 parallax-img">
+    <div class="md:col-span-3 md:col-start-1 parallax-img">
       <div class="overflow-hidden">
-        <img class="w-full h-[60vh] object-cover" src="assets/img/img02.jpg" alt="Tandoor-fresh dish at Kasturi" />
+        <img class="w-full h-[52vh] object-cover" src="assets/img/img02.jpg" alt="Tandoor-fresh dish at Kasturi" />
       </div>
       <div class="mt-3 flex items-center justify-between text-[10px] tracking-[0.3em] uppercase text-ash/80">
-        <span>Plate N° 04</span><span>Tandoor · 480°C</span>
+        <span>Plate N° 04</span><span>Tandoor</span>
       </div>
     </div>
-    <div class="md:col-span-4 md:col-start-8 mt-32 parallax-img">
+    <div class="md:col-span-3 md:col-start-4 mt-24 parallax-img">
       <div class="overflow-hidden">
-        <img class="w-full h-[50vh] object-cover" src="assets/img/img25.jpg" alt="Inside the Kasturi dining room" />
+        <img class="w-full h-[46vh] object-cover" src="assets/img/img25.jpg" alt="Inside the Kasturi dining room" />
       </div>
       <div class="mt-3 flex items-center justify-between text-[10px] tracking-[0.3em] uppercase text-ash/80">
         <span>The Hall</span><span>Ben Thanh</span>
+      </div>
+    </div>
+    <div class="md:col-span-3 md:col-start-7 parallax-img">
+      <div class="overflow-hidden">
+        <img class="w-full h-[52vh] object-cover" src="assets/img/img38.jpg" alt="Slow-stewed Indian curries on the buffet line" />
+      </div>
+      <div class="mt-3 flex items-center justify-between text-[10px] tracking-[0.3em] uppercase text-ash/80">
+        <span>The Service</span><span>Slow-stewed</span>
+      </div>
+    </div>
+    <div class="md:col-span-3 md:col-start-10 mt-24 parallax-img">
+      <div class="overflow-hidden">
+        <img class="w-full h-[46vh] object-cover" src="assets/img/img12.jpg" alt="Long banquet table set for a group dinner at Kasturi" />
+      </div>
+      <div class="mt-3 flex items-center justify-between text-[10px] tracking-[0.3em] uppercase text-ash/80">
+        <span>The Long Table</span><span>For Groups</span>
       </div>
     </div>
   </div>
@@ -696,7 +712,7 @@ tailwind.config = {
     <div class="grid md:grid-cols-2 gap-x-10 gap-y-2">
       <div class="border-t border-gold/30 py-6">
         <div class="flex items-baseline justify-between gap-4 mb-2">
-          <h4 class="font-serif text-2xl md:text-3xl text-charcoal">Kasturi</h4>
+          <h4 class="font-serif text-2xl md:text-3xl text-charcoal">Kasturi Indian Restaurant &amp; Bar</h4>
           <div class="text-gold tracking-[0.3em] uppercase text-[10px] whitespace-nowrap">90 Seats</div>
         </div>
         <p class="text-ash text-sm leading-relaxed">12D Cach Mang Thang 8, Ben Thanh Ward, Ho Chi Minh City</p>
@@ -737,12 +753,37 @@ tailwind.config = {
       </div>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-px bg-gold/30 border border-gold/30">
-      <div class="bg-ivory px-6 py-10 flex items-center justify-center min-h-[120px]"><span class="font-serif text-xl md:text-2xl text-charcoal text-center leading-tight">Viettravel</span></div>
-      <div class="bg-ivory px-6 py-10 flex items-center justify-center min-h-[120px]"><span class="font-serif text-xl md:text-2xl text-charcoal text-center leading-tight">Vietnam Lotus</span></div>
-      <div class="bg-ivory px-6 py-10 flex items-center justify-center min-h-[120px]"><span class="font-serif text-xl md:text-2xl text-charcoal text-center leading-tight">Asian Classic Travel</span></div>
-      <div class="bg-ivory px-6 py-10 flex items-center justify-center min-h-[120px]"><span class="font-serif text-xl md:text-2xl text-charcoal text-center leading-tight">Mekong Vacation</span></div>
-      <div class="bg-ivory px-6 py-10 flex items-center justify-center min-h-[120px]"><span class="font-serif text-xl md:text-2xl text-charcoal text-center leading-tight">Viethind DMC</span></div>
-      <div class="bg-ivory px-6 py-10 flex items-center justify-center min-h-[120px]"><span class="font-serif text-xl md:text-2xl text-charcoal text-center leading-tight">Indovietnam Travel DMC</span></div>
+      <!-- Each tile has a logo slot (img) and a fallback brand name. Swap the img src when real logo files arrive. -->
+      <div class="bg-ivory px-6 py-10 flex flex-col items-center justify-center gap-3 min-h-[150px]">
+        <span class="font-serif text-2xl md:text-3xl text-charcoal text-center leading-none tracking-wide">Vietravel</span>
+        <span class="block w-8 h-px bg-gold"></span>
+        <span class="text-[9px] tracking-[0.35em] uppercase text-ash">Tour Operator</span>
+      </div>
+      <div class="bg-ivory px-6 py-10 flex flex-col items-center justify-center gap-3 min-h-[150px]">
+        <span class="font-serif text-2xl md:text-3xl text-charcoal text-center leading-none tracking-wide">VN Lotus<span class="italic text-gold"> Travel</span></span>
+        <span class="block w-8 h-px bg-gold"></span>
+        <span class="text-[9px] tracking-[0.35em] uppercase text-ash">Tour Operator</span>
+      </div>
+      <div class="bg-ivory px-6 py-10 flex flex-col items-center justify-center gap-3 min-h-[150px]">
+        <span class="font-serif text-2xl md:text-3xl text-charcoal text-center leading-none tracking-wide">Asian Classic<br/><span class="italic">Travels</span></span>
+        <span class="block w-8 h-px bg-gold"></span>
+        <span class="text-[9px] tracking-[0.35em] uppercase text-ash">DMC</span>
+      </div>
+      <div class="bg-ivory px-6 py-10 flex flex-col items-center justify-center gap-3 min-h-[150px]">
+        <span class="font-serif text-2xl md:text-3xl text-charcoal text-center leading-none tracking-wide">Mekong<br/><span class="italic">Vacations</span></span>
+        <span class="block w-8 h-px bg-gold"></span>
+        <span class="text-[9px] tracking-[0.35em] uppercase text-ash">DMC</span>
+      </div>
+      <div class="bg-ivory px-6 py-10 flex flex-col items-center justify-center gap-3 min-h-[150px]">
+        <span class="font-serif text-2xl md:text-3xl text-charcoal text-center leading-none tracking-wide">Viethind</span>
+        <span class="block w-8 h-px bg-gold"></span>
+        <span class="text-[9px] tracking-[0.35em] uppercase text-ash">DMC · VN · KH · LA</span>
+      </div>
+      <div class="bg-ivory px-6 py-10 flex flex-col items-center justify-center gap-3 min-h-[150px]">
+        <span class="font-serif text-2xl md:text-3xl text-charcoal text-center leading-none tracking-wide">Indovietnam<br/><span class="italic">Travel</span></span>
+        <span class="block w-8 h-px bg-gold"></span>
+        <span class="text-[9px] tracking-[0.35em] uppercase text-ash">DMC</span>
+      </div>
     </div>
   </div>
 
