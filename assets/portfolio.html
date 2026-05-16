@@ -129,6 +129,7 @@
     letter-spacing: 0.35em;
     color: var(--ivory);
   }
+  .cover .brand img { display: block; height: 24mm; width: auto; filter: brightness(0) invert(1); }
   .cover h1 {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 500;
@@ -161,7 +162,9 @@
     border-bottom: 1px solid rgba(212,175,55,0.30);
   }
   .pg-head .brand { font-family: 'Cormorant Garamond', serif; font-size: 14pt; letter-spacing: 0.32em; color: var(--charcoal); }
+  .pg-head .brand img { display: block; height: 13mm; width: auto; }
   .page-dark .pg-head .brand { color: var(--ivory); }
+  .page-dark .pg-head .brand img { filter: brightness(0) invert(1); }
   .page-dark .pg-head { color: rgba(253,251,247,0.65); border-color: rgba(212,175,55,0.35); }
 
   .pg-foot {
@@ -392,20 +395,21 @@
   .pricing-wrap { margin-top: 10mm; }
   .pricing-grid {
     display: grid;
-    grid-template-columns: 38mm 1fr 1fr 1fr 1fr;
-    gap: 3mm;
+    grid-template-columns: 30mm 1fr 1fr 1fr 1fr;
+    gap: 2.5mm;
   }
   .pricing-grid .cell {
-    padding: 5mm 4mm;
+    padding: 4mm 3mm;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     text-align: center;
+    white-space: nowrap;
   }
   .pricing-grid .row-label {
     background: linear-gradient(135deg, rgba(212,175,55,0.85), rgba(224,164,88,0.70));
     color: var(--charcoal);
     font-family: 'Cormorant Garamond', serif;
     font-weight: 600;
-    font-size: 13pt;
+    font-size: 12pt;
     letter-spacing: 0.02em;
     border-radius: 12mm;
   }
@@ -414,7 +418,7 @@
     color: var(--charcoal);
     font-family: 'Inter', sans-serif;
     font-weight: 700;
-    font-size: 12pt;
+    font-size: 10pt;
     letter-spacing: 0.01em;
     border-radius: 12mm;
   }
@@ -424,7 +428,7 @@
     color: var(--charcoal);
     font-family: 'Inter', sans-serif;
     font-weight: 500;
-    font-size: 10pt;
+    font-size: 9pt;
     border-radius: 12mm;
   }
   .pricing-grid .val-dessert {
@@ -568,7 +572,7 @@
   <div class="cover-content">
     <div>
       <div class="top-row">
-        <span class="brand">KASTURI</span>
+        <span class="brand"><img src="logo/kasturi-logo-wordmark.svg" alt="Kasturi" /></span>
         <span>Est. 2017 · HCMC + Phu Quoc</span>
       </div>
     </div>
@@ -587,7 +591,7 @@
 <!-- ===================== PAGE 2 — OUR STORY ===================== -->
 <section class="page page-bg">
   <div class="pg-head">
-    <span class="brand">KASTURI</span>
+    <span class="brand"><img src="logo/kasturi-logo-wordmark.svg" alt="Kasturi" /></span>
     <span>Our Story · 02</span>
   </div>
   <div class="kicker">— Our Story</div>
@@ -620,7 +624,7 @@
 <!-- ===================== PAGE 3 — OVERVIEW & EXPERIENCE ===================== -->
 <section class="page page-bg">
   <div class="pg-head">
-    <span class="brand">KASTURI</span>
+    <span class="brand"><img src="logo/kasturi-logo-wordmark.svg" alt="Kasturi" /></span>
     <span>Overview · 03</span>
   </div>
   <div class="kicker">— Overview &amp; Experience</div>
@@ -659,7 +663,7 @@
 <!-- ===================== PAGE 4 — BRANCHES ===================== -->
 <section class="page page-bg">
   <div class="pg-head">
-    <span class="brand">KASTURI</span>
+    <span class="brand"><img src="logo/kasturi-logo-wordmark.svg" alt="Kasturi" /></span>
     <span>Branches · 04</span>
   </div>
   <div class="kicker">— Our Branches</div>
@@ -711,7 +715,7 @@
 <!-- ===================== PAGE 5 — SERVICES ===================== -->
 <section class="page page-bg">
   <div class="pg-head">
-    <span class="brand">KASTURI</span>
+    <span class="brand"><img src="logo/kasturi-logo-wordmark.svg" alt="Kasturi" /></span>
     <span>Group Menu &amp; Services · 05</span>
   </div>
   <div class="kicker">— Group Menu Options 2026</div>
@@ -770,7 +774,7 @@
 <!-- ===================== PAGE 6 — TERMS & CONDITIONS ===================== -->
 <section class="page page-bg">
   <div class="pg-head">
-    <span class="brand">KASTURI</span>
+    <span class="brand"><img src="logo/kasturi-logo-wordmark.svg" alt="Kasturi" /></span>
     <span>Terms &amp; Conditions · 06</span>
   </div>
   <div class="kicker">— Group Booking Terms</div>
@@ -832,7 +836,7 @@
 <!-- ===================== PAGE 6 — SIGNATURE DISHES ===================== -->
 <section class="page page-bg">
   <div class="pg-head">
-    <span class="brand">KASTURI</span>
+    <span class="brand"><img src="logo/kasturi-logo-wordmark.svg" alt="Kasturi" /></span>
     <span>Kitchen · 07</span>
   </div>
   <div class="kicker">— From Our Kitchen</div>
@@ -875,7 +879,7 @@
 <!-- ===================== PAGE 8 — VENUE GALLERY ===================== -->
 <section class="page page-bg">
   <div class="pg-head">
-    <span class="brand">KASTURI</span>
+    <span class="brand"><img src="logo/kasturi-logo-wordmark.svg" alt="Kasturi" /></span>
     <span>Venues · 08</span>
   </div>
   <div class="kicker">— Inside Our Restaurants</div>
@@ -903,7 +907,7 @@
 <!-- ===================== PAGE 9 — PARTNERS + CONTACT ===================== -->
 <section class="page page-dark">
   <div class="pg-head">
-    <span class="brand">KASTURI</span>
+    <span class="brand"><img src="logo/kasturi-logo-wordmark.svg" alt="Kasturi" /></span>
     <span>Partners &amp; Contact · 09</span>
   </div>
   <div class="kicker">— Our Golden Partners</div>

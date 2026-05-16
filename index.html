@@ -7,7 +7,7 @@
 <meta name="description" content="Kasturi Indian Restaurant in Ho Chi Minh City — authentic Indian flavors, generous portions, and warm, professional service for families, friends and tour groups." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="icon" type="image/svg+xml" href="assets/logo/kasturi-logo-cutout.svg" />
+<link rel="icon" type="image/svg+xml" href="assets/logo/kasturi-logo-wordmark.svg" />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -139,6 +139,15 @@ tailwind.config = {
   #siteHeader.is-scrolled::before { opacity:0; }
   #siteHeader > * { position:relative; }
 
+  /* Kasturi wordmark logo — inverts to white when sitting on the dark hero,
+     reverts to its native red once the header is scrolled onto an ivory bg. */
+  .kasturi-logo { display:block; height: 2.75rem; width: auto; }
+  @media (min-width: 768px) { .kasturi-logo { height: 3rem; } }
+  #siteHeader:not(.is-scrolled) .kasturi-logo { filter: brightness(0) invert(1); }
+  #siteHeader .kasturi-logo { transition: filter .5s ease, height .4s ease; }
+  #siteHeader.is-scrolled .kasturi-logo { height: 2.25rem; }
+  @media (min-width: 768px) { #siteHeader.is-scrolled .kasturi-logo { height: 2.5rem; } }
+
   .hairline { height:1px; background:linear-gradient(90deg, transparent, rgba(212,175,55,.55), transparent); }
 
   .btn-gold { position:relative; overflow:hidden; isolation:isolate; transition: color .4s ease; }
@@ -216,7 +225,9 @@ tailwind.config = {
 <div class="cursor-ring"></div>
 
 <header id="siteHeader" class="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-6 flex items-center justify-between text-ivory transition-[background-color,color,backdrop-filter,border-color,padding] duration-500 border-b border-transparent">
-  <a href="#top" class="font-serif text-2xl tracking-[0.35em]" data-hover>KASTURI</a>
+  <a href="#top" class="flex items-center" data-hover aria-label="Kasturi — home">
+    <img src="assets/logo/kasturi-logo-wordmark.svg" alt="Kasturi" class="kasturi-logo" />
+  </a>
   <nav class="hidden md:flex items-center gap-10 text-[11px] tracking-[0.3em] uppercase">
     <a href="#story" data-hover class="hover:text-gold transition-colors">Story</a>
     <a href="menu.html" data-hover class="hover:text-gold transition-colors">Menu</a>
@@ -235,7 +246,7 @@ tailwind.config = {
 
 <div id="navOverlay" class="nav-overlay fixed inset-0 z-[55] bg-ivory2 flex flex-col px-6 md:px-12 py-6">
   <div class="flex items-center justify-between">
-    <span class="font-serif text-2xl tracking-[0.35em] text-charcoal">KASTURI</span>
+    <img src="assets/logo/kasturi-logo-wordmark.svg" alt="Kasturi" class="block h-9 w-auto" />
     <button id="navClose" class="text-[11px] tracking-[0.3em] uppercase text-charcoal" data-hover aria-label="Close menu">Close ×</button>
   </div>
   <div class="flex-1 grid md:grid-cols-[1.6fr_1fr] gap-10 mt-16 md:mt-24 overflow-hidden">
@@ -879,7 +890,7 @@ tailwind.config = {
   </div>
   <div class="mt-20 flex flex-col md:flex-row md:items-end justify-between gap-4 border-t border-gold/20 pt-6 text-[10px] tracking-[0.3em] uppercase text-ash">
     <span>© Kasturi Indian Restaurant · Saigon · 2026</span>
-    <span class="font-serif text-charcoal tracking-[0.5em] text-base order-first md:order-none">KASTURI</span>
+    <img src="assets/logo/kasturi-logo-wordmark.svg" alt="Kasturi" class="block h-8 w-auto order-first md:order-none" />
     <span>Crafted in Low Light</span>
   </div>
 </footer>
