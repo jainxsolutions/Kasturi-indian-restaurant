@@ -130,21 +130,47 @@ tailwind.config = {
     footer h3 { font-size: 2.5rem; line-height: 1.05; }
   }
 
-  /* Push header content below iOS status bar / notch + give the navbar
-     an opaque ivory background so menu rows don't bleed through it. */
+  /* Push header content below iOS status bar / notch. Header is a dark
+     scrim while sitting over the menu hero photo, switches to glass ivory
+     once scrolled past the hero. */
   #siteHeader { padding-top: calc(1.5rem + env(safe-area-inset-top, 0px)); }
+  #siteHeader.is-scrolled { padding-top: calc(1rem + env(safe-area-inset-top, 0px)); }
   #siteHeader::before {
     content:""; position:absolute;
     top: calc(-1 * env(safe-area-inset-top, 0px));
-    left:0; right:0; bottom: -1rem;
+    left:0; right:0; bottom: -2.5rem;
+    background: linear-gradient(180deg,
+      rgba(10,10,10,0.78) 0%,
+      rgba(10,10,10,0.60) 40%,
+      rgba(10,10,10,0.25) 75%,
+      rgba(10,10,10,0) 100%);
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 65%, transparent 100%);
+            mask-image: linear-gradient(180deg, #000 0%, #000 65%, transparent 100%);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index:-1; pointer-events:none;
+    transition: opacity .5s ease;
+    opacity:1;
+  }
+  #siteHeader.is-scrolled::before {
     background: rgba(253,251,247,0.65);
-    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 78%, transparent 100%);
-            mask-image: linear-gradient(180deg, #000 0%, #000 78%, transparent 100%);
     backdrop-filter: blur(18px) saturate(150%);
     -webkit-backdrop-filter: blur(18px) saturate(150%);
-    z-index:-1; pointer-events:none;
+    bottom: -1rem;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 78%, transparent 100%);
+            mask-image: linear-gradient(180deg, #000 0%, #000 78%, transparent 100%);
+    opacity:1;
   }
   #siteHeader > * { position:relative; }
+
+  /* Kasturi wordmark — white over the dark scrim on the menu hero,
+     reverts to its native gold once the header is scrolled onto ivory bg. */
+  .kasturi-logo { display:block; height: 2.5rem; width: auto; }
+  @media (min-width: 768px) { .kasturi-logo { height: 3rem; } }
+  #siteHeader:not(.is-scrolled) .kasturi-logo { filter: brightness(0) invert(1); }
+  #siteHeader .kasturi-logo { transition: filter .5s ease, height .4s ease; }
+  #siteHeader.is-scrolled .kasturi-logo { height: 2rem; }
+  @media (min-width: 768px) { #siteHeader.is-scrolled .kasturi-logo { height: 2.5rem; } }
 </style>
 </head>
 <body class="grain mesh antialiased">
@@ -152,9 +178,9 @@ tailwind.config = {
 <div class="cursor-dot"></div>
 <div class="cursor-ring"></div>
 
-<header id="siteHeader" class="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-6 flex items-center justify-between text-charcoal">
+<header id="siteHeader" class="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-6 flex items-center justify-between text-ivory">
   <a href="index.html" class="flex items-center" data-hover aria-label="Kasturi — home">
-    <img src="assets/logo/kasturi-logo-wordmark.svg" alt="Kasturi" class="block h-10 md:h-12 w-auto" />
+    <img src="assets/logo/kasturi-logo-wordmark.svg" alt="Kasturi" class="kasturi-logo" />
   </a>
   <nav class="hidden md:flex items-center gap-10 text-[11px] tracking-[0.3em] uppercase">
     <a href="index.html#story" data-hover class="hover:text-gold transition-colors">Story</a>
@@ -193,9 +219,9 @@ tailwind.config = {
 </div>
 
 <!-- INTRO -->
-<section class="relative px-6 md:px-12 pt-40 md:pt-56 pb-24 overflow-hidden">
+<section id="top" class="relative px-6 md:px-12 pt-40 md:pt-56 pb-24 overflow-hidden">
   <div class="absolute inset-0 pointer-events-none">
-    <img class="menu-hero-bg w-full h-full object-cover" src="assets/img/img29.jpg" alt="" aria-hidden="true" />
+    <img class="menu-hero-bg w-full h-full object-cover" src="assets/img/menu-hero.jpg" alt="" aria-hidden="true" />
     <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.72)_0%,rgba(10,10,10,0.62)_55%,rgba(10,10,10,0.78)_100%)]"></div>
     <div class="absolute inset-0 bg-[radial-gradient(60%_60%_at_25%_55%,rgba(10,10,10,0.45),transparent_75%)]"></div>
     <div class="absolute inset-0 bg-[radial-gradient(90%_70%_at_50%_50%,transparent_60%,rgba(212,175,55,0.10))]"></div>
@@ -911,6 +937,26 @@ tailwind.config = {
       el.addEventListener('mouseenter', () => ring.classList.add('hover'));
       el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
     });
+  }
+
+  // Header: dark scrim + white wordmark over the menu hero, glass ivory + gold once scrolled past
+  const header = document.getElementById('siteHeader');
+  const hero = document.getElementById('top');
+  if (header && hero) {
+    const scrolledClasses = ['bg-ivory/65','backdrop-blur-xl','backdrop-saturate-150','border-gold/30','shadow-[0_2px_18px_-6px_rgba(26,26,26,0.12)]','py-4'];
+    const updateHeader = () => {
+      const threshold = hero.offsetTop + hero.offsetHeight - 220;
+      if (window.scrollY > threshold) {
+        header.classList.remove('text-ivory','py-6');
+        header.classList.add('text-charcoal','is-scrolled', ...scrolledClasses);
+      } else {
+        header.classList.remove('text-charcoal','is-scrolled', ...scrolledClasses);
+        header.classList.add('text-ivory','py-6');
+      }
+    };
+    window.addEventListener('scroll', updateHeader, { passive: true });
+    window.addEventListener('resize', updateHeader);
+    updateHeader();
   }
 
   // Overlay menu
